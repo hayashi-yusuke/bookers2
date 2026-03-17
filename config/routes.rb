@@ -1,4 +1,16 @@
 Rails.application.routes.draw do
+  get "users/index"
+  get "users/show"
+  get "users/edit"
+  get "users/update"
+  get "books/index"
+  get "books/show"
+  get "books/new"
+  get "books/create"
+  get "books/edit"
+  get "books/update"
+  get "books/destroy"
+  get "homes/top"
   resource :session
   resources :passwords, param: :token
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
