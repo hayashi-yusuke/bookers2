@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
+  root "homes#top"
   get "homes/top"
   resources :books
-  resources :users, only: [:index, :show, :edit, :update]
+  resources :users, only: [:new, :create, :index, :show, :edit, :update]
   resource :session
   resources :passwords, param: :token
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

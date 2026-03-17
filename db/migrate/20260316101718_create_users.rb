@@ -3,6 +3,7 @@ class CreateUsers < ActiveRecord::Migration[8.1]
     create_table :users do |t|
       t.string :email_address, null: false
       t.string :password_digest, null: false
+      # 下二つはmigrate後に書き込んだから適応されてない
       t.string :name
       t.text :introduction
 
