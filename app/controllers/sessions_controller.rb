@@ -6,7 +6,8 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if user = User.authenticate_by(params.permit(:email_address, :password))
+    # 名前でユーザーを検索
+    if user = User.find_by(name: params[:name])&.authenticate(params[:password])
       start_new_session_for user
       redirect_to after_authentication_url
     else
@@ -14,8 +15,20 @@ class SessionsController < ApplicationController
     end
   end
 
+  def start_new_session_for(user)
+  session[:user_id] = user.id
+  end
+
   def destroy
     terminate_session
     redirect_to new_session_path, status: :see_other
   end
+
+   private
+
+  def terminate_session
+    session.delete(:user_id)
+    @current_user = nil
+  end
+
 end
