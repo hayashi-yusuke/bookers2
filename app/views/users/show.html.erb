@@ -1,22 +1,26 @@
 <div class="container mt-3">
   <div class="row">
-    <div class="col-4">
+    <div class="col-3 offset-1">
       <h2>User info</h2>
 
-      <img src="NO IMAGE" alt="プロフィール画像">
+      <% if @user.avatar.attached? %>
+        <%= image_tag @user.avatar, class: "img-fluid", style: "width: 100px; height: 100px; object-fit: cover;" %>
+      <% else %>
+        <%= image_tag "no_image.jpg", class: "img-fluid", style: "width: 100px; height: 100px; object-fit: cover; border: 1px solid #ccc;" %>
+      <% end %>
 
-      <table class="table">
-        <tr>
-          <td>name</td>
-          <td><%= @user.name %></td>
+      <table class="table table-borderless">
+        <tr class="border-top">
+          <td><strong>name</strong></td>
+          <td><strong><%= @user.name %></strong></td>
         </tr>
-        <tr>
-          <td>introduction</td>
-          <td><%= @user.introduction %></td>
+        <tr class="border-top">
+          <td><strong>introduction</strong></td>
+          <td><strong><%= @user.introduction %></strong></td>
         </tr>
       </table>
 
-      <%= link_to edit_user_path(@user), class: "btn btn-outline-secondary" do %>
+      <%= link_to edit_user_path(@user), class: "btn btn-outline-secondary", style: "width: 105%; margin-left: -2.5%;" do %>
         <i class="fa-solid fa-user-gear"></i>
       <% end %>
 
@@ -35,11 +39,12 @@
     </div>
 
 
-    <div class="col-8">
-      <h2>Books</h2>
+    <div class="col-6 offset-1">
+      <h2 style="border-bottom: 1px solid #ccc;">Books</h2>
       <table class="table">
-        <thead>
+        <thead style="border-bottom: 2px solid #ccc;">
           <tr>
+            <th></th>
             <th>Title</th>
             <th>Opinion</th>
           </tr>
@@ -47,6 +52,7 @@
         <tbody>
           <% @books.each do |book| %>
             <tr>
+
               <td><%= book.title %></td>
               <td><%= book.opinion %></td>
             </tr>

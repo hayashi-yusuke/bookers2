@@ -3,4 +3,5 @@ class User < ApplicationRecord
   has_many :sessions, dependent: :destroy
   has_many :books, dependent: :destroy # アソシエーション
   normalizes :email_address, with: ->(e) { e.strip.downcase }
+  has_one_attached :avatar
 end
