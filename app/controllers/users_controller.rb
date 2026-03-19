@@ -17,6 +17,9 @@ class UsersController < ApplicationController
   end
 
   def index
+    @users = User.all 
+    @user = Current.session.user
+    @new_book = Book.new
   end
 
   def show
@@ -42,7 +45,7 @@ class UsersController < ApplicationController
  
   def user_params
     # name, email_address, password, password_confirmation を許可
-    params.require(:user).permit(:name, :email_address, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email_address, :password, :password_confirmation, :introduction, :avatar)
   end
   
 end
