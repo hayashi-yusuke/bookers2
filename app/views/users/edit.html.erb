@@ -1,2 +1,12 @@
-<h1>Users#edit</h1>
-<p>Find me in app/views/users/edit.html.erb</p>
+<div class="container mt-4">
+  <h2>User info</h2>
+
+  <%= form_with model: @user do |f| %>
+    <p>name</p>
+    <%= f.text_field :name, class: "form-control" %>
+    <p>image</p>
+    <%= f.%>
+    <p>introduction</p>
+    <%= f.text_field :introduction, class: "form-control" %>
+  <% end %>
+</div>

@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
 
   def destroy
     terminate_session
-    redirect_to new_session_path, status: :see_other
+    redirect_to after_logout_url
   end
 
 end

@@ -6,15 +6,13 @@ class ApplicationController < ActionController::Base
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
 
-  #ログイン処理ができないときに足した
-  helper_method :current_user, :logged_in?
+  private
 
-  def current_user
-    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+  def after_authentication_url
+    user_path(Current.user.id)
   end
 
-  def logged_in?
-    current_user.present?
+  def after_logout_url
+    root_path
   end
-
 end
