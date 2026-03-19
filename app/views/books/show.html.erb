@@ -1,2 +1,28 @@
-<h1>Books#show</h1>
-<p>Find me in app/views/books/show.html.erb</p>
+<div class="container mt-3">
+  <div class="row">
+    <%= render 'users/user_info' %>
+
+    <!-- 右側：Book detail -->
+    <div class="col-6 offset-1">
+      <h2 style="border-bottom: 1px solid #ccc;">Book detail</h2>
+      <table class="table table-borderless border-top">
+        <tr>
+          <td rowspan="2">
+            <% if @book.user.avatar.attached? %>
+              <%= image_tag @book.user.avatar, style: "width: 100px; height: 100px; object-fit: cover;" %>
+            <% else %>
+              <%= image_tag "no_image.jpg", style: "width: 100px; height: 100px; object-fit: cover;" %>
+            <% end %>
+            <p><%= link_to @book.user.name, user_path(@book.user), style: "text-decoration: none;" %></p>
+          </td>
+          <td><%= @book.title %></td>
+          <td><%= @book.body %></td>
+          <% if @book.user == Current.session.user %>
+            <td><%= link_to "Edit", edit_book_path(@book), class: "btn btn-outline-secondary" %></td>
+            <td><%= link_to "Destroy", book_path(@book), data: { turbo_method: :delete }, class: "btn btn-danger" %></td>
+          <% end %>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
