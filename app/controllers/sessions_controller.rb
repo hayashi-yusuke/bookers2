@@ -8,7 +8,8 @@ class SessionsController < ApplicationController
   def create
     # 名前でユーザーを検索
     if user = User.find_by(name: params[:name])&.authenticate(params[:password])
-      start_new_session_for user
+          Rails.logger.debug "remember_me: #{params[:remember_me]}"  # ← 追加
+      start_new_session_for user, remember_me: params[:remember_me] == "1"
       redirect_to after_authentication_url, notice: "Login successfully!"
     else
       redirect_to new_session_path, alert: "Try another email address or password."
