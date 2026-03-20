@@ -1,4 +1,8 @@
 class BooksController < ApplicationController
+  before_action :require_authentication # アクションの前にログイン確認
+  before_action :correct_book_user, only: [:edit, :update, :destroy]
+
+
   def index
     @books = Book.all
     @user = Current.session.user
@@ -16,12 +20,14 @@ class BooksController < ApplicationController
   end
 
   def create
-    @book = Book.new(book_params)
-    @book.user = Current.session.user
-    if @book.save
-      redirect_to book_path(@book)
+    @new_book = Book.new(book_params)
+    @new_book.user = Current.session.user
+    if @new_book.save
+      redirect_to book_path(@new_book), notice: "Book created successfully!"
     else
-      redirect_to user_path(Current.session.user)
+      @user = Current.session.user
+      @books = @user.books
+      render 'users/show', status: :unprocessable_entity
     end
   end
 
@@ -32,9 +38,9 @@ class BooksController < ApplicationController
   def update
     @book = Book.find(params[:id])
     if @book.update(book_params)
-      redirect_to book_path(@book)
+      redirect_to book_path(@book), notice: "Book updated successfully!"
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -49,4 +55,12 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit(:title, :body)
   end
+
+  def correct_book_user
+    @book = Book.find(params[:id])
+    unless @book.user == Current.session.user
+      redirect_to book_path(@book), alert: "Access error! You can't edit other users' books."
+    end
+  end
+  
 end

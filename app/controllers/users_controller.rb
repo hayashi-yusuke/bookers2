@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   # 認証をスキップ: サインアップ（new, create）はログイン前に行うため
-  allow_unauthenticated_access only: [:new, :create] 
+  allow_unauthenticated_access only: [:new, :create]
+  before_action :correct_user, only: [:edit, :update]
+
 
   def new
     @user = User.new
@@ -35,9 +37,9 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      redirect_to user_path(@user)
+      redirect_to user_path(@user), notice: "Profile updated successfully!"
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -46,6 +48,13 @@ class UsersController < ApplicationController
   def user_params
     # name, email_address, password, password_confirmation を許可
     params.require(:user).permit(:name, :email_address, :password, :password_confirmation, :introduction, :avatar)
+  end
+
+  def correct_user
+    @user = User.find(params[:id])
+    unless @user == Current.session.user
+      redirect_to user_path(Current.session.user), alert: "Access error! You can't edit other users."
+    end
   end
   
 end
