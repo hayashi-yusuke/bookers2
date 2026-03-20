@@ -8,8 +8,8 @@
       <table class="table table-borderless border-top">
         <tr>
           <td rowspan="2">
-            <% if @book.user.avatar.attached? %>
-              <%= image_tag @book.user.avatar, style: "width: 100px; height: 100px; object-fit: cover;" %>
+            <% if @book.user.profile_image.attached? %>
+              <%= image_tag @book.user.profile_image, style: "width: 100px; height: 100px; object-fit: cover;" %>
             <% else %>
               <%= image_tag "no_image.jpg", style: "width: 100px; height: 100px; object-fit: cover;" %>
             <% end %>

@@ -1,8 +1,8 @@
 <div class="col-3 offset-1">
   <h2>User info</h2>
 
-  <% if @user.avatar.attached? %>
-    <%= image_tag @user.avatar, class: "img-fluid", style: "width: 100px; height: 100px; object-fit: cover;" %>
+  <% if @user.profile_image.attached? %>
+    <%= image_tag @user.profile_image, class: "img-fluid", style: "width: 100px; height: 100px; object-fit: cover;" %>
   <% else %>
     <%= image_tag "no_image.jpg", class: "img-fluid", style: "width: 100px; height: 100px; object-fit: cover; border: 1px solid #ccc;" %>
   <% end %>

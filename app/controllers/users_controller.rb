@@ -47,7 +47,7 @@ class UsersController < ApplicationController
  
   def user_params
     # name, email_address, password, password_confirmation を許可
-    params.require(:user).permit(:name, :email_address, :password, :password_confirmation, :introduction, :avatar)
+    params.require(:user).permit(:name, :email_address, :password, :password_confirmation, :introduction, :profile_image)
   end
 
   def correct_user

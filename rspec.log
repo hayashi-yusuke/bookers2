@@ -1,0 +1,2889 @@
+
+UsersController
+  GET #edit
+    ログインユーザーの場合
+      レスポンスが成功すること
+      @userが正しく設定されていること
+
+Bookモデルのテスト
+  バリデーションのテスト
+    titleカラム
+      空欄でないこと
+    bodyカラム
+      空欄でないこと
+      200文字以下であること: 200文字は〇
+      200文字以下であること: 201文字は×
+  アソシエーションのテスト
+    Userモデルとの関係
+      N:1となっている
+
+Userモデルのテスト
+  バリデーションのテスト
+    nameカラム
+      空欄でないこと
+      2文字以上であること: 1文字は×
+      2文字以上であること: 2文字は〇
+      20文字以下であること: 20文字は〇
+      20文字以下であること: 21文字は×
+      一意性があること
+    introductionカラム
+      50文字以下であること: 50文字は〇
+      50文字以下であること: 51文字は×
+  アソシエーションのテスト
+    Bookモデルとの関係
+      1:Nとなっている
+
+[STEP1] ユーザログイン前のテスト
+  トップ画面のテスト
+    表示内容の確認
+      URLが正しい (FAILED - 1)
+      Log inリンクが表示される: 青色のボタンの表示が「Log in」である (FAILED - 2)
+      Log inリンクの内容が正しい (FAILED - 3)
+      Sign upリンクが表示される: 緑色のボタンの表示が「Sign up」である (FAILED - 4)
+      Sign upリンクの内容が正しい (FAILED - 5)
+  アバウト画面のテスト
+    表示内容の確認
+      URLが正しい (FAILED - 6)
+  ヘッダーのテスト: ログインしていない場合
+    表示内容の確認
+      Bookersリンクが表示される: 左上から1番目のリンクが「Bookers」である (FAILED - 7)
+      Homeリンクが表示される: 左上から2番目のリンクが「Home」である (FAILED - 8)
+      Aboutリンクが表示される: 左上から3番目のリンクが「About」である (FAILED - 9)
+      Sign upリンクが表示される: 左上から4番目のリンクが「Sign up」である (FAILED - 10)
+      Log inリンクが表示される: 左上から5番目のリンクが「Log in」である (FAILED - 11)
+    リンクの内容を確認
+      Bookersを押すと、トップ画面に遷移する (FAILED - 12)
+      Homeを押すと、トップ画面に遷移する (FAILED - 13)
+      Aboutを押すと、アバウト画面に遷移する (FAILED - 14)
+      Sign upを押すと、新規登録画面に遷移する (FAILED - 15)
+      Log inを押すと、ログイン画面に遷移する (FAILED - 16)
+  ユーザ新規登録のテスト
+    表示内容の確認
+      URLが正しい (FAILED - 17)
+      「Sign up」と表示される (FAILED - 18)
+      nameフォームが表示される (FAILED - 19)
+      email_addressフォームが表示される (FAILED - 20)
+      passwordフォームが表示される (FAILED - 21)
+      password_confirmationフォームが表示される (FAILED - 22)
+      Sign upボタンが表示される (FAILED - 23)
+    新規登録成功のテスト
+      正しく新規登録される (FAILED - 24)
+      新規登録後のリダイレクト先が、新規登録できたユーザの詳細画面になっている (FAILED - 25)
+  ユーザログイン
+    表示内容の確認
+      URLが正しい (FAILED - 26)
+      「Log in」と表示される (FAILED - 27)
+      nameフォームが表示される (FAILED - 28)
+      passwordフォームが表示される (FAILED - 29)
+      Log inボタンが表示される (FAILED - 30)
+      email_addressフォームは表示されない (FAILED - 31)
+    ログイン成功のテスト
+      ログイン後のリダイレクト先が、ログインしたユーザの詳細画面になっている (FAILED - 32)
+    ログイン失敗のテスト
+      ログインに失敗し、ログイン画面にリダイレクトされる (FAILED - 33)
+  ヘッダーのテスト: ログインしている場合
+    ヘッダーの表示を確認
+      Bookersリンクが表示される: 左上から1番目のリンクが「Bookers」である (FAILED - 34)
+      Homeリンクが表示される: 左上から2番目のリンクが「Home」である (FAILED - 35)
+      Usersリンクが表示される: 左上から3番目のリンクが「Users」である (FAILED - 36)
+      Booksリンクが表示される: 左上から4番目のリンクが「Books」である (FAILED - 37)
+      Log outリンクが表示される: 左上から5番目のリンクが「Log out」である (FAILED - 38)
+  ユーザログアウトのテスト
+    ログアウト機能のテスト
+      正しくログアウトできている: ログアウト後のリダイレクト先においてAbout画面へのリンクが存在する (FAILED - 39)
+      ログアウト後のリダイレクト先が、トップになっている (FAILED - 40)
+
+[STEP2] ユーザログイン後のテスト
+  ヘッダーのテスト: ログインしている場合
+    リンクの内容を確認: ※logoutは『ユーザログアウトのテスト』でテスト済みになります。
+      Homeを押すと、自分のユーザ詳細画面に遷移する (FAILED - 41)
+      Usersを押すと、ユーザ一覧画面に遷移する (FAILED - 42)
+      Booksを押すと、投稿一覧画面に遷移する (FAILED - 43)
+  投稿一覧画面のテスト
+    表示内容の確認
+      URLが正しい (FAILED - 44)
+      自分と他人の画像のリンク先が正しい (FAILED - 45)
+      自分の投稿と他人の投稿のタイトルのリンク先がそれぞれ正しい (FAILED - 46)
+      自分の投稿と他人の投稿のオピニオンが表示される (FAILED - 47)
+    サイドバーの確認
+      自分の名前と紹介文が表示される (FAILED - 48)
+      自分のユーザ編集画面へのリンクが存在する (FAILED - 49)
+      「New book」と表示される (FAILED - 50)
+      titleフォームが表示される (FAILED - 51)
+      titleフォームに値が入っていない (FAILED - 52)
+      bodyフォームが表示される (FAILED - 53)
+      bodyフォームに値が入っていない (FAILED - 54)
+      Create Bookボタンが表示される (FAILED - 55)
+    投稿成功のテスト
+      自分の新しい投稿が正しく保存される (FAILED - 56)
+      リダイレクト先が、保存できた投稿の詳細画面になっている (FAILED - 57)
+  自分の投稿詳細画面のテスト
+    表示内容の確認
+      URLが正しい (FAILED - 58)
+      「Book detail」と表示される (FAILED - 59)
+      ユーザ画像・名前のリンク先が正しい (FAILED - 60)
+      投稿のtitleが表示される (FAILED - 61)
+      投稿のbodyが表示される (FAILED - 62)
+      投稿の編集リンクが表示される (FAILED - 63)
+      投稿の削除リンクが表示される (FAILED - 64)
+    サイドバーの確認
+      自分の名前と紹介文が表示される (FAILED - 65)
+      自分のユーザ編集画面へのリンクが存在する (FAILED - 66)
+      「New book」と表示される (FAILED - 67)
+      titleフォームが表示される (FAILED - 68)
+      titleフォームに値が入っていない (FAILED - 69)
+      bodyフォームが表示される (FAILED - 70)
+      bodyフォームに値が入っていない (FAILED - 71)
+      Create Bookボタンが表示される (FAILED - 72)
+    投稿成功のテスト
+      自分の新しい投稿が正しく保存される (FAILED - 73)
+    編集リンクのテスト
+      編集画面に遷移する (FAILED - 74)
+    削除リンクのテスト
+      application.html.erbにjavascript_pack_tagを含んでいる (FAILED - 75)
+      正しく削除される (FAILED - 76)
+      リダイレクト先が、投稿一覧画面になっている (FAILED - 77)
+  自分の投稿編集画面のテスト
+    表示の確認
+      URLが正しい (FAILED - 78)
+      「Editing Book」と表示される (FAILED - 79)
+      title編集フォームが表示される (FAILED - 80)
+      body編集フォームが表示される (FAILED - 81)
+      Update Bookボタンが表示される (FAILED - 82)
+      Showリンクが表示される (FAILED - 83)
+      Backリンクが表示される (FAILED - 84)
+    編集成功のテスト
+      titleが正しく更新される (FAILED - 85)
+      bodyが正しく更新される (FAILED - 86)
+      リダイレクト先が、更新した投稿の詳細画面になっている (FAILED - 87)
+  ユーザ一覧画面のテスト
+    表示内容の確認
+      URLが正しい (FAILED - 88)
+      自分と他人の画像が表示される: fallbackの画像がサイドバーの1つ＋一覧(2人)の2つの計3つ存在する (FAILED - 89)
+      自分と他人の名前がそれぞれ表示される (FAILED - 90)
+      自分と他人のshowリンクがそれぞれ表示される (FAILED - 91)
+    サイドバーの確認
+      自分の名前と紹介文が表示される (FAILED - 92)
+      自分のユーザ編集画面へのリンクが存在する (FAILED - 93)
+      「New book」と表示される (FAILED - 94)
+      titleフォームが表示される (FAILED - 95)
+      titleフォームに値が入っていない (FAILED - 96)
+      bodyフォームが表示される (FAILED - 97)
+      bodyフォームに値が入っていない (FAILED - 98)
+      Create Bookボタンが表示される (FAILED - 99)
+  自分のユーザ詳細画面のテスト
+    表示の確認
+      URLが正しい (FAILED - 100)
+      投稿一覧のユーザ画像のリンク先が正しい (FAILED - 101)
+      投稿一覧に自分の投稿のtitleが表示され、リンクが正しい (FAILED - 102)
+      投稿一覧に自分の投稿のbodyが表示される (FAILED - 103)
+      他人の投稿は表示されない (FAILED - 104)
+    サイドバーの確認
+      自分の名前と紹介文が表示される (FAILED - 105)
+      自分のユーザ編集画面へのリンクが存在する (FAILED - 106)
+      「New book」と表示される (FAILED - 107)
+      titleフォームが表示される (FAILED - 108)
+      titleフォームに値が入っていない (FAILED - 109)
+      bodyフォームが表示される (FAILED - 110)
+      bodyフォームに値が入っていない (FAILED - 111)
+      Create Bookボタンが表示される (FAILED - 112)
+  自分のユーザ情報編集画面のテスト
+    表示の確認
+      URLが正しい (FAILED - 113)
+      名前編集フォームに自分の名前が表示される (FAILED - 114)
+      画像編集フォームが表示される (FAILED - 115)
+      自己紹介編集フォームに自分の自己紹介文が表示される (FAILED - 116)
+      Update Userボタンが表示される (FAILED - 117)
+    更新成功のテスト
+      nameが正しく更新される (FAILED - 118)
+      introductionが正しく更新される (FAILED - 119)
+      リダイレクト先が、自分のユーザ詳細画面になっている (FAILED - 120)
+
+[STEP3] 仕上げのテスト
+  サクセスメッセージのテスト
+    ユーザ新規登録成功時 (FAILED - 121)
+    ユーザログイン成功時 (FAILED - 122)
+    ユーザログアウト成功時 (FAILED - 123)
+    ユーザのプロフィール情報更新成功時 (FAILED - 124)
+    投稿データの新規投稿成功時: 投稿一覧画面から行います。 (FAILED - 125)
+    投稿データの更新成功時 (FAILED - 126)
+  処理失敗時のテスト
+    ユーザ新規登録失敗: nameを1文字にする
+      新規登録されない (FAILED - 127)
+      新規登録画面を表示しており、フォームの内容が正しい (FAILED - 128)
+      バリデーションエラーが表示される (FAILED - 129)
+    ユーザのプロフィール情報編集失敗: nameを1文字にする
+      更新されない (FAILED - 130)
+      ユーザ編集画面を表示しており、フォームの内容が正しい (FAILED - 131)
+      バリデーションエラーが表示される (FAILED - 132)
+    投稿データの新規投稿失敗: 投稿一覧画面から行い、titleを空にする
+      投稿が保存されない (FAILED - 133)
+      投稿一覧画面を表示している (FAILED - 134)
+      新規投稿フォームの内容が正しい (FAILED - 135)
+      バリデーションエラーが表示される (FAILED - 136)
+    投稿データの更新失敗: titleを空にする
+      投稿が更新されない (FAILED - 137)
+      投稿編集画面を表示しており、フォームの内容が正しい (FAILED - 138)
+      エラーメッセージが表示される (FAILED - 139)
+  ログインしていない場合のアクセス制限のテスト: アクセスできず、ログイン画面に遷移する
+    ユーザ一覧画面 (FAILED - 140)
+    ユーザ詳細画面 (FAILED - 141)
+    ユーザ情報編集画面 (FAILED - 142)
+    投稿一覧画面 (FAILED - 143)
+    投稿詳細画面 (FAILED - 144)
+    投稿編集画面 (FAILED - 145)
+  他人の画面のテスト
+    他人の投稿詳細画面のテスト
+      表示内容の確認
+        URLが正しい (FAILED - 146)
+        「Book detail」と表示される (FAILED - 147)
+        ユーザ画像・名前のリンク先が正しい (FAILED - 148)
+        投稿のtitleが表示される (FAILED - 149)
+        投稿のopinionが表示される (FAILED - 150)
+        投稿の編集リンクが表示されない (FAILED - 151)
+        投稿の削除リンクが表示されない (FAILED - 152)
+      サイドバーの確認
+        他人の名前と紹介文が表示される (FAILED - 153)
+        他人のユーザ編集画面へのリンクが存在する (FAILED - 154)
+        自分の名前と紹介文は表示されない (FAILED - 155)
+        自分のユーザ編集画面へのリンクは存在しない (FAILED - 156)
+    他人の投稿編集画面
+      遷移できず、投稿一覧画面にリダイレクトされる (FAILED - 157)
+    他人のユーザ詳細画面のテスト
+      表示の確認
+        URLが正しい (FAILED - 158)
+        投稿一覧のユーザ画像のリンク先が正しい (FAILED - 159)
+        投稿一覧に他人の投稿のtitleが表示され、リンクが正しい (FAILED - 160)
+        投稿一覧に他人の投稿のopinionが表示される (FAILED - 161)
+        自分の投稿は表示されない (FAILED - 162)
+      サイドバーの確認
+        他人の名前と紹介文が表示される (FAILED - 163)
+        他人のユーザ編集画面へのリンクが存在する (FAILED - 164)
+        自分の名前と紹介文は表示されない (FAILED - 165)
+        自分のユーザ編集画面へのリンクは存在しない (FAILED - 166)
+    他人のユーザ情報編集画面
+      遷移できず、自分のユーザ詳細画面にリダイレクトされる (FAILED - 167)
+  グリッドシステムのテスト: container, row, col-md-〇を正しく使えている
+    ユーザ一覧画面 (FAILED - 168)
+    ユーザ詳細画面 (FAILED - 169)
+    投稿一覧画面 (FAILED - 170)
+    投稿詳細画面 (FAILED - 171)
+  アイコンのテスト
+    トップ画面
+      本のアイコンが表示される (FAILED - 172)
+    アバウト画面
+      本のアイコンが表示される (FAILED - 173)
+    ヘッダー: ログインしていない場合
+      Homeリンクのアイコンが表示される (FAILED - 174)
+      Aboutリンクのアイコンが表示される (FAILED - 175)
+      Sign upリンクのアイコンが表示される (FAILED - 176)
+      Log inリンクのアイコンが表示される (FAILED - 177)
+    ヘッダー: ログインしている場合
+      Homeリンクのアイコンが表示される (FAILED - 178)
+      Usersリンクのアイコンが表示される (FAILED - 179)
+      Booksリンクのアイコンが表示される (FAILED - 180)
+      Log outリンクのアイコンが表示される (FAILED - 181)
+    サイドバー
+      ユーザ一覧画面でレンチアイコンが表示される (FAILED - 182)
+      ユーザ詳細画面でレンチアイコンが表示される (FAILED - 183)
+      投稿一覧画面でレンチアイコンが表示される (FAILED - 184)
+      投稿詳細画面でレンチアイコンが表示される (FAILED - 185)
+
+Failures:
+
+  1) [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 URLが正しい
+     Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+     ActionView::Template::Error:
+       undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+     # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+     # ./spec/system/01_before_login_spec.rb:6:in `block (3 levels) in <main>'
+     # ------------------
+     # --- Caused by: ---
+     # NameError:
+     #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+     #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  2) [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 Log inリンクが表示される: 青色のボタンの表示が「Log in」である
+     Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+     ActionView::Template::Error:
+       undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+     # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+     # ./spec/system/01_before_login_spec.rb:6:in `block (3 levels) in <main>'
+     # ------------------
+     # --- Caused by: ---
+     # NameError:
+     #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+     #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  3) [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 Log inリンクの内容が正しい
+     Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+     ActionView::Template::Error:
+       undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+     # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+     # ./spec/system/01_before_login_spec.rb:6:in `block (3 levels) in <main>'
+     # ------------------
+     # --- Caused by: ---
+     # NameError:
+     #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+     #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  4) [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 Sign upリンクが表示される: 緑色のボタンの表示が「Sign up」である
+     Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+     ActionView::Template::Error:
+       undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+     # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+     # ./spec/system/01_before_login_spec.rb:6:in `block (3 levels) in <main>'
+     # ------------------
+     # --- Caused by: ---
+     # NameError:
+     #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+     #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  5) [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 Sign upリンクの内容が正しい
+     Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+     ActionView::Template::Error:
+       undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+     # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+     # ./spec/system/01_before_login_spec.rb:6:in `block (3 levels) in <main>'
+     # ------------------
+     # --- Caused by: ---
+     # NameError:
+     #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+     #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  6) [STEP1] ユーザログイン前のテスト アバウト画面のテスト 表示内容の確認 URLが正しい
+     Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+     ActionView::Template::Error:
+       undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+     # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+     # ./spec/system/01_before_login_spec.rb:34:in `block (3 levels) in <main>'
+     # ------------------
+     # --- Caused by: ---
+     # NameError:
+     #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+     #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  7) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Bookersリンクが表示される: 左上から1番目のリンクが「Bookers」である
+     Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+     ActionView::Template::Error:
+       undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+     # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+     # ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'
+     # ------------------
+     # --- Caused by: ---
+     # NameError:
+     #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+     #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  8) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Homeリンクが表示される: 左上から2番目のリンクが「Home」である
+     Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+     ActionView::Template::Error:
+       undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+     # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+     # ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'
+     # ------------------
+     # --- Caused by: ---
+     # NameError:
+     #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+     #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  9) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Aboutリンクが表示される: 左上から3番目のリンクが「About」である
+     Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+     ActionView::Template::Error:
+       undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+     # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+     # ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'
+     # ------------------
+     # --- Caused by: ---
+     # NameError:
+     #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+     #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  10) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Sign upリンクが表示される: 左上から4番目のリンクが「Sign up」である
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  11) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Log inリンクが表示される: 左上から5番目のリンクが「Log in」である
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  12) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Bookersを押すと、トップ画面に遷移する
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  13) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Homeを押すと、トップ画面に遷移する
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  14) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Aboutを押すと、アバウト画面に遷移する
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  15) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Sign upを押すと、新規登録画面に遷移する
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  16) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Log inを押すと、ログイン画面に遷移する
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  17) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 URLが正しい
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:112:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  18) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 「Sign up」と表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:112:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  19) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 nameフォームが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:112:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  20) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 email_addressフォームが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:112:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  21) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 passwordフォームが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:112:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  22) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 password_confirmationフォームが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:112:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  23) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 Sign upボタンが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:112:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  24) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 新規登録成功のテスト 正しく新規登録される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:112:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  25) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 新規登録成功のテスト 新規登録後のリダイレクト先が、新規登録できたユーザの詳細画面になっている
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:112:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  26) [STEP1] ユーザログイン前のテスト ユーザログイン 表示内容の確認 URLが正しい
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:161:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  27) [STEP1] ユーザログイン前のテスト ユーザログイン 表示内容の確認 「Log in」と表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:161:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  28) [STEP1] ユーザログイン前のテスト ユーザログイン 表示内容の確認 nameフォームが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:161:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  29) [STEP1] ユーザログイン前のテスト ユーザログイン 表示内容の確認 passwordフォームが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:161:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  30) [STEP1] ユーザログイン前のテスト ユーザログイン 表示内容の確認 Log inボタンが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:161:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  31) [STEP1] ユーザログイン前のテスト ユーザログイン 表示内容の確認 email_addressフォームは表示されない
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:161:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  32) [STEP1] ユーザログイン前のテスト ユーザログイン ログイン成功のテスト ログイン後のリダイレクト先が、ログインしたユーザの詳細画面になっている
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:161:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  33) [STEP1] ユーザログイン前のテスト ユーザログイン ログイン失敗のテスト ログインに失敗し、ログイン画面にリダイレクトされる
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:161:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  34) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしている場合 ヘッダーの表示を確認 Bookersリンクが表示される: 左上から1番目のリンクが「Bookers」である
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:214:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  35) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしている場合 ヘッダーの表示を確認 Homeリンクが表示される: 左上から2番目のリンクが「Home」である
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:214:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  36) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしている場合 ヘッダーの表示を確認 Usersリンクが表示される: 左上から3番目のリンクが「Users」である
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:214:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  37) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしている場合 ヘッダーの表示を確認 Booksリンクが表示される: 左上から4番目のリンクが「Books」である
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:214:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  38) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしている場合 ヘッダーの表示を確認 Log outリンクが表示される: 左上から5番目のリンクが「Log out」である
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:214:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  39) [STEP1] ユーザログイン前のテスト ユーザログアウトのテスト ログアウト機能のテスト 正しくログアウトできている: ログアウト後のリダイレクト先においてAbout画面へのリンクが存在する
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:248:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  40) [STEP1] ユーザログイン前のテスト ユーザログアウトのテスト ログアウト機能のテスト ログアウト後のリダイレクト先が、トップになっている
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/01_before_login_spec.rb:248:in `block (3 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  41) [STEP2] ユーザログイン後のテスト ヘッダーのテスト: ログインしている場合 リンクの内容を確認: ※logoutは『ユーザログアウトのテスト』でテスト済みになります。 Homeを押すと、自分のユーザ詳細画面に遷移する
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  42) [STEP2] ユーザログイン後のテスト ヘッダーのテスト: ログインしている場合 リンクの内容を確認: ※logoutは『ユーザログアウトのテスト』でテスト済みになります。 Usersを押すと、ユーザ一覧画面に遷移する
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  43) [STEP2] ユーザログイン後のテスト ヘッダーのテスト: ログインしている場合 リンクの内容を確認: ※logoutは『ユーザログアウトのテスト』でテスト済みになります。 Booksを押すと、投稿一覧画面に遷移する
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  44) [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト 表示内容の確認 URLが正しい
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  45) [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト 表示内容の確認 自分と他人の画像のリンク先が正しい
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  46) [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト 表示内容の確認 自分の投稿と他人の投稿のタイトルのリンク先がそれぞれ正しい
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  47) [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト 表示内容の確認 自分の投稿と他人の投稿のオピニオンが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  48) [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト サイドバーの確認 自分の名前と紹介文が表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  49) [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト サイドバーの確認 自分のユーザ編集画面へのリンクが存在する
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  50) [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト サイドバーの確認 「New book」と表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  51) [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト サイドバーの確認 titleフォームが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  52) [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト サイドバーの確認 titleフォームに値が入っていない
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  53) [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト サイドバーの確認 bodyフォームが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  54) [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト サイドバーの確認 bodyフォームに値が入っていない
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  55) [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト サイドバーの確認 Create Bookボタンが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  56) [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト 投稿成功のテスト 自分の新しい投稿が正しく保存される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  57) [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト 投稿成功のテスト リダイレクト先が、保存できた投稿の詳細画面になっている
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  58) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 表示内容の確認 URLが正しい
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  59) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 表示内容の確認 「Book detail」と表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  60) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 表示内容の確認 ユーザ画像・名前のリンク先が正しい
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  61) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 表示内容の確認 投稿のtitleが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  62) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 表示内容の確認 投稿のbodyが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  63) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 表示内容の確認 投稿の編集リンクが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  64) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 表示内容の確認 投稿の削除リンクが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  65) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト サイドバーの確認 自分の名前と紹介文が表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  66) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト サイドバーの確認 自分のユーザ編集画面へのリンクが存在する
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  67) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト サイドバーの確認 「New book」と表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  68) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト サイドバーの確認 titleフォームが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  69) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト サイドバーの確認 titleフォームに値が入っていない
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  70) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト サイドバーの確認 bodyフォームが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  71) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト サイドバーの確認 bodyフォームに値が入っていない
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  72) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト サイドバーの確認 Create Bookボタンが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  73) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 投稿成功のテスト 自分の新しい投稿が正しく保存される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  74) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 編集リンクのテスト 編集画面に遷移する
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  75) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 削除リンクのテスト application.html.erbにjavascript_pack_tagを含んでいる
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  76) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 削除リンクのテスト 正しく削除される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  77) [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 削除リンクのテスト リダイレクト先が、投稿一覧画面になっている
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  78) [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 表示の確認 URLが正しい
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  79) [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 表示の確認 「Editing Book」と表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  80) [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 表示の確認 title編集フォームが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  81) [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 表示の確認 body編集フォームが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  82) [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 表示の確認 Update Bookボタンが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  83) [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 表示の確認 Showリンクが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  84) [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 表示の確認 Backリンクが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  85) [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 編集成功のテスト titleが正しく更新される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  86) [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 編集成功のテスト bodyが正しく更新される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  87) [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 編集成功のテスト リダイレクト先が、更新した投稿の詳細画面になっている
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  88) [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト 表示内容の確認 URLが正しい
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  89) [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト 表示内容の確認 自分と他人の画像が表示される: fallbackの画像がサイドバーの1つ＋一覧(2人)の2つの計3つ存在する
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  90) [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト 表示内容の確認 自分と他人の名前がそれぞれ表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  91) [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト 表示内容の確認 自分と他人のshowリンクがそれぞれ表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  92) [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト サイドバーの確認 自分の名前と紹介文が表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  93) [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト サイドバーの確認 自分のユーザ編集画面へのリンクが存在する
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  94) [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト サイドバーの確認 「New book」と表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  95) [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト サイドバーの確認 titleフォームが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  96) [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト サイドバーの確認 titleフォームに値が入っていない
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  97) [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト サイドバーの確認 bodyフォームが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  98) [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト サイドバーの確認 bodyフォームに値が入っていない
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  99) [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト サイドバーの確認 Create Bookボタンが表示される
+      Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+      ActionView::Template::Error:
+        undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+      # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+      # ------------------
+      # --- Caused by: ---
+      # NameError:
+      #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+      #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  100) [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト 表示の確認 URLが正しい
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  101) [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト 表示の確認 投稿一覧のユーザ画像のリンク先が正しい
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  102) [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト 表示の確認 投稿一覧に自分の投稿のtitleが表示され、リンクが正しい
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  103) [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト 表示の確認 投稿一覧に自分の投稿のbodyが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  104) [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト 表示の確認 他人の投稿は表示されない
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  105) [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト サイドバーの確認 自分の名前と紹介文が表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  106) [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト サイドバーの確認 自分のユーザ編集画面へのリンクが存在する
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  107) [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト サイドバーの確認 「New book」と表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  108) [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト サイドバーの確認 titleフォームが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  109) [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト サイドバーの確認 titleフォームに値が入っていない
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  110) [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト サイドバーの確認 bodyフォームが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  111) [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト サイドバーの確認 bodyフォームに値が入っていない
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  112) [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト サイドバーの確認 Create Bookボタンが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  113) [STEP2] ユーザログイン後のテスト 自分のユーザ情報編集画面のテスト 表示の確認 URLが正しい
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  114) [STEP2] ユーザログイン後のテスト 自分のユーザ情報編集画面のテスト 表示の確認 名前編集フォームに自分の名前が表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  115) [STEP2] ユーザログイン後のテスト 自分のユーザ情報編集画面のテスト 表示の確認 画像編集フォームが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  116) [STEP2] ユーザログイン後のテスト 自分のユーザ情報編集画面のテスト 表示の確認 自己紹介編集フォームに自分の自己紹介文が表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  117) [STEP2] ユーザログイン後のテスト 自分のユーザ情報編集画面のテスト 表示の確認 Update Userボタンが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  118) [STEP2] ユーザログイン後のテスト 自分のユーザ情報編集画面のテスト 更新成功のテスト nameが正しく更新される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  119) [STEP2] ユーザログイン後のテスト 自分のユーザ情報編集画面のテスト 更新成功のテスト introductionが正しく更新される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  120) [STEP2] ユーザログイン後のテスト 自分のユーザ情報編集画面のテスト 更新成功のテスト リダイレクト先が、自分のユーザ詳細画面になっている
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/02_after_login_spec.rb:10:in `block (2 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  121) [STEP3] 仕上げのテスト サクセスメッセージのテスト ユーザ新規登録成功時
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:13:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  122) [STEP3] 仕上げのテスト サクセスメッセージのテスト ユーザログイン成功時
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:22:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  123) [STEP3] 仕上げのテスト サクセスメッセージのテスト ユーザログアウト成功時
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:29:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  124) [STEP3] 仕上げのテスト サクセスメッセージのテスト ユーザのプロフィール情報更新成功時
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:39:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  125) [STEP3] 仕上げのテスト サクセスメッセージのテスト 投稿データの新規投稿成功時: 投稿一覧画面から行います。
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:48:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  126) [STEP3] 仕上げのテスト サクセスメッセージのテスト 投稿データの更新成功時
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:59:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  127) [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザ新規登録失敗: nameを1文字にする 新規登録されない
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:72:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  128) [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザ新規登録失敗: nameを1文字にする 新規登録画面を表示しており、フォームの内容が正しい
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:72:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  129) [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザ新規登録失敗: nameを1文字にする バリデーションエラーが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:72:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  130) [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザのプロフィール情報編集失敗: nameを1文字にする 更新されない
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:100:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  131) [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザのプロフィール情報編集失敗: nameを1文字にする ユーザ編集画面を表示しており、フォームの内容が正しい
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:100:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  132) [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザのプロフィール情報編集失敗: nameを1文字にする バリデーションエラーが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:100:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  133) [STEP3] 仕上げのテスト 処理失敗時のテスト 投稿データの新規投稿失敗: 投稿一覧画面から行い、titleを空にする 投稿が保存されない
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:122:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  134) [STEP3] 仕上げのテスト 処理失敗時のテスト 投稿データの新規投稿失敗: 投稿一覧画面から行い、titleを空にする 投稿一覧画面を表示している
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:122:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  135) [STEP3] 仕上げのテスト 処理失敗時のテスト 投稿データの新規投稿失敗: 投稿一覧画面から行い、titleを空にする 新規投稿フォームの内容が正しい
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:122:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  136) [STEP3] 仕上げのテスト 処理失敗時のテスト 投稿データの新規投稿失敗: 投稿一覧画面から行い、titleを空にする バリデーションエラーが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:122:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  137) [STEP3] 仕上げのテスト 処理失敗時のテスト 投稿データの更新失敗: titleを空にする 投稿が更新されない
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:152:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  138) [STEP3] 仕上げのテスト 処理失敗時のテスト 投稿データの更新失敗: titleを空にする 投稿編集画面を表示しており、フォームの内容が正しい
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:152:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  139) [STEP3] 仕上げのテスト 処理失敗時のテスト 投稿データの更新失敗: titleを空にする エラーメッセージが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:152:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  140) [STEP3] 仕上げのテスト ログインしていない場合のアクセス制限のテスト: アクセスできず、ログイン画面に遷移する ユーザ一覧画面
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:180:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  141) [STEP3] 仕上げのテスト ログインしていない場合のアクセス制限のテスト: アクセスできず、ログイン画面に遷移する ユーザ詳細画面
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:184:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  142) [STEP3] 仕上げのテスト ログインしていない場合のアクセス制限のテスト: アクセスできず、ログイン画面に遷移する ユーザ情報編集画面
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:188:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  143) [STEP3] 仕上げのテスト ログインしていない場合のアクセス制限のテスト: アクセスできず、ログイン画面に遷移する 投稿一覧画面
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:192:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  144) [STEP3] 仕上げのテスト ログインしていない場合のアクセス制限のテスト: アクセスできず、ログイン画面に遷移する 投稿詳細画面
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:196:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  145) [STEP3] 仕上げのテスト ログインしていない場合のアクセス制限のテスト: アクセスできず、ログイン画面に遷移する 投稿編集画面
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:200:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  146) [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト 表示内容の確認 URLが正しい
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  147) [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト 表示内容の確認 「Book detail」と表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  148) [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト 表示内容の確認 ユーザ画像・名前のリンク先が正しい
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  149) [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト 表示内容の確認 投稿のtitleが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  150) [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト 表示内容の確認 投稿のopinionが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  151) [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト 表示内容の確認 投稿の編集リンクが表示されない
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  152) [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト 表示内容の確認 投稿の削除リンクが表示されない
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  153) [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト サイドバーの確認 他人の名前と紹介文が表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  154) [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト サイドバーの確認 他人のユーザ編集画面へのリンクが存在する
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  155) [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト サイドバーの確認 自分の名前と紹介文は表示されない
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  156) [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト サイドバーの確認 自分のユーザ編集画面へのリンクは存在しない
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  157) [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿編集画面 遷移できず、投稿一覧画面にリダイレクトされる
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  158) [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ詳細画面のテスト 表示の確認 URLが正しい
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  159) [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ詳細画面のテスト 表示の確認 投稿一覧のユーザ画像のリンク先が正しい
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  160) [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ詳細画面のテスト 表示の確認 投稿一覧に他人の投稿のtitleが表示され、リンクが正しい
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  161) [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ詳細画面のテスト 表示の確認 投稿一覧に他人の投稿のopinionが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  162) [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ詳細画面のテスト 表示の確認 自分の投稿は表示されない
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  163) [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ詳細画面のテスト サイドバーの確認 他人の名前と紹介文が表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  164) [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ詳細画面のテスト サイドバーの確認 他人のユーザ編集画面へのリンクが存在する
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  165) [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ詳細画面のテスト サイドバーの確認 自分の名前と紹介文は表示されない
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  166) [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ詳細画面のテスト サイドバーの確認 自分のユーザ編集画面へのリンクは存在しない
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  167) [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ情報編集画面 遷移できず、自分のユーザ詳細画面にリダイレクトされる
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:207:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  168) [STEP3] 仕上げのテスト グリッドシステムのテスト: container, row, col-md-〇を正しく使えている ユーザ一覧画面
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:326:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  169) [STEP3] 仕上げのテスト グリッドシステムのテスト: container, row, col-md-〇を正しく使えている ユーザ詳細画面
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:326:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  170) [STEP3] 仕上げのテスト グリッドシステムのテスト: container, row, col-md-〇を正しく使えている 投稿一覧画面
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:326:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  171) [STEP3] 仕上げのテスト グリッドシステムのテスト: container, row, col-md-〇を正しく使えている 投稿詳細画面
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:326:in `block (3 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  172) [STEP3] 仕上げのテスト アイコンのテスト トップ画面 本のアイコンが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:359:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  173) [STEP3] 仕上げのテスト アイコンのテスト アバウト画面 本のアイコンが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:371:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  174) [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしていない場合 Homeリンクのアイコンが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:383:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  175) [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしていない場合 Aboutリンクのアイコンが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:383:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  176) [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしていない場合 Sign upリンクのアイコンが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:383:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  177) [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしていない場合 Log inリンクのアイコンが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:383:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  178) [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしている場合 Homeリンクのアイコンが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:404:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  179) [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしている場合 Usersリンクのアイコンが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:404:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  180) [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしている場合 Booksリンクのアイコンが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:404:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  181) [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしている場合 Log outリンクのアイコンが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:404:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  182) [STEP3] 仕上げのテスト アイコンのテスト サイドバー ユーザ一覧画面でレンチアイコンが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:428:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  183) [STEP3] 仕上げのテスト アイコンのテスト サイドバー ユーザ詳細画面でレンチアイコンが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:428:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  184) [STEP3] 仕上げのテスト アイコンのテスト サイドバー 投稿一覧画面でレンチアイコンが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:428:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+  185) [STEP3] 仕上げのテスト アイコンのテスト サイドバー 投稿詳細画面でレンチアイコンが表示される
+       Failure/Error: <%= link_to homes_about_path, class: "nav-link text-light" do %>
+
+       ActionView::Template::Error:
+         undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       # ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+       # ./spec/system/03_finishing_touches_spec.rb:428:in `block (4 levels) in <main>'
+       # ------------------
+       # --- Caused by: ---
+       # NameError:
+       #   undefined local variable or method `homes_about_path' for an instance of #<Class:0x00007a86ce05a968>
+       #   ./app/views/layouts/application.html.erb:72:in `_app_views_layouts_application_html_erb___2343739358094364643_27240'
+
+Finished in 5.86 seconds (files took 1.47 seconds to load)
+201 examples, 185 failures
+
+Failed examples:
+
+rspec ./spec/system/01_before_login_spec.rb:10 # [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 URLが正しい
+rspec ./spec/system/01_before_login_spec.rb:13 # [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 Log inリンクが表示される: 青色のボタンの表示が「Log in」である
+rspec ./spec/system/01_before_login_spec.rb:17 # [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 Log inリンクの内容が正しい
+rspec ./spec/system/01_before_login_spec.rb:21 # [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 Sign upリンクが表示される: 緑色のボタンの表示が「Sign up」である
+rspec ./spec/system/01_before_login_spec.rb:25 # [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 Sign upリンクの内容が正しい
+rspec ./spec/system/01_before_login_spec.rb:38 # [STEP1] ユーザログイン前のテスト アバウト画面のテスト 表示内容の確認 URLが正しい
+rspec ./spec/system/01_before_login_spec.rb:50 # [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Bookersリンクが表示される: 左上から1番目のリンクが「Bookers」である
+rspec ./spec/system/01_before_login_spec.rb:54 # [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Homeリンクが表示される: 左上から2番目のリンクが「Home」である
+rspec ./spec/system/01_before_login_spec.rb:58 # [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Aboutリンクが表示される: 左上から3番目のリンクが「About」である
+rspec ./spec/system/01_before_login_spec.rb:62 # [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Sign upリンクが表示される: 左上から4番目のリンクが「Sign up」である
+rspec ./spec/system/01_before_login_spec.rb:66 # [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Log inリンクが表示される: 左上から5番目のリンクが「Log in」である
+rspec ./spec/system/01_before_login_spec.rb:75 # [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Bookersを押すと、トップ画面に遷移する
+rspec ./spec/system/01_before_login_spec.rb:82 # [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Homeを押すと、トップ画面に遷移する
+rspec ./spec/system/01_before_login_spec.rb:89 # [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Aboutを押すと、アバウト画面に遷移する
+rspec ./spec/system/01_before_login_spec.rb:95 # [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Sign upを押すと、新規登録画面に遷移する
+rspec ./spec/system/01_before_login_spec.rb:101 # [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Log inを押すと、ログイン画面に遷移する
+rspec ./spec/system/01_before_login_spec.rb:116 # [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 URLが正しい
+rspec ./spec/system/01_before_login_spec.rb:119 # [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 「Sign up」と表示される
+rspec ./spec/system/01_before_login_spec.rb:122 # [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 nameフォームが表示される
+rspec ./spec/system/01_before_login_spec.rb:125 # [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 email_addressフォームが表示される
+rspec ./spec/system/01_before_login_spec.rb:128 # [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 passwordフォームが表示される
+rspec ./spec/system/01_before_login_spec.rb:131 # [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 password_confirmationフォームが表示される
+rspec ./spec/system/01_before_login_spec.rb:134 # [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 Sign upボタンが表示される
+rspec ./spec/system/01_before_login_spec.rb:147 # [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 新規登録成功のテスト 正しく新規登録される
+rspec ./spec/system/01_before_login_spec.rb:150 # [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 新規登録成功のテスト 新規登録後のリダイレクト先が、新規登録できたユーザの詳細画面になっている
+rspec ./spec/system/01_before_login_spec.rb:165 # [STEP1] ユーザログイン前のテスト ユーザログイン 表示内容の確認 URLが正しい
+rspec ./spec/system/01_before_login_spec.rb:168 # [STEP1] ユーザログイン前のテスト ユーザログイン 表示内容の確認 「Log in」と表示される
+rspec ./spec/system/01_before_login_spec.rb:171 # [STEP1] ユーザログイン前のテスト ユーザログイン 表示内容の確認 nameフォームが表示される
+rspec ./spec/system/01_before_login_spec.rb:174 # [STEP1] ユーザログイン前のテスト ユーザログイン 表示内容の確認 passwordフォームが表示される
+rspec ./spec/system/01_before_login_spec.rb:177 # [STEP1] ユーザログイン前のテスト ユーザログイン 表示内容の確認 Log inボタンが表示される
+rspec ./spec/system/01_before_login_spec.rb:180 # [STEP1] ユーザログイン前のテスト ユーザログイン 表示内容の確認 email_addressフォームは表示されない
+rspec ./spec/system/01_before_login_spec.rb:192 # [STEP1] ユーザログイン前のテスト ユーザログイン ログイン成功のテスト ログイン後のリダイレクト先が、ログインしたユーザの詳細画面になっている
+rspec ./spec/system/01_before_login_spec.rb:204 # [STEP1] ユーザログイン前のテスト ユーザログイン ログイン失敗のテスト ログインに失敗し、ログイン画面にリダイレクトされる
+rspec ./spec/system/01_before_login_spec.rb:221 # [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしている場合 ヘッダーの表示を確認 Bookersリンクが表示される: 左上から1番目のリンクが「Bookers」である
+rspec ./spec/system/01_before_login_spec.rb:225 # [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしている場合 ヘッダーの表示を確認 Homeリンクが表示される: 左上から2番目のリンクが「Home」である
+rspec ./spec/system/01_before_login_spec.rb:229 # [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしている場合 ヘッダーの表示を確認 Usersリンクが表示される: 左上から3番目のリンクが「Users」である
+rspec ./spec/system/01_before_login_spec.rb:233 # [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしている場合 ヘッダーの表示を確認 Booksリンクが表示される: 左上から4番目のリンクが「Books」である
+rspec ./spec/system/01_before_login_spec.rb:237 # [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしている場合 ヘッダーの表示を確認 Log outリンクが表示される: 左上から5番目のリンクが「Log out」である
+rspec ./spec/system/01_before_login_spec.rb:258 # [STEP1] ユーザログイン前のテスト ユーザログアウトのテスト ログアウト機能のテスト 正しくログアウトできている: ログアウト後のリダイレクト先においてAbout画面へのリンクが存在する
+rspec ./spec/system/01_before_login_spec.rb:261 # [STEP1] ユーザログイン前のテスト ユーザログアウトのテスト ログアウト機能のテスト ログアウト後のリダイレクト先が、トップになっている
+rspec ./spec/system/02_after_login_spec.rb:20 # [STEP2] ユーザログイン後のテスト ヘッダーのテスト: ログインしている場合 リンクの内容を確認: ※logoutは『ユーザログアウトのテスト』でテスト済みになります。 Homeを押すと、自分のユーザ詳細画面に遷移する
+rspec ./spec/system/02_after_login_spec.rb:26 # [STEP2] ユーザログイン後のテスト ヘッダーのテスト: ログインしている場合 リンクの内容を確認: ※logoutは『ユーザログアウトのテスト』でテスト済みになります。 Usersを押すと、ユーザ一覧画面に遷移する
+rspec ./spec/system/02_after_login_spec.rb:32 # [STEP2] ユーザログイン後のテスト ヘッダーのテスト: ログインしている場合 リンクの内容を確認: ※logoutは『ユーザログアウトのテスト』でテスト済みになります。 Booksを押すと、投稿一覧画面に遷移する
+rspec ./spec/system/02_after_login_spec.rb:47 # [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト 表示内容の確認 URLが正しい
+rspec ./spec/system/02_after_login_spec.rb:50 # [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト 表示内容の確認 自分と他人の画像のリンク先が正しい
+rspec ./spec/system/02_after_login_spec.rb:54 # [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト 表示内容の確認 自分の投稿と他人の投稿のタイトルのリンク先がそれぞれ正しい
+rspec ./spec/system/02_after_login_spec.rb:58 # [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト 表示内容の確認 自分の投稿と他人の投稿のオピニオンが表示される
+rspec ./spec/system/02_after_login_spec.rb:65 # [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト サイドバーの確認 自分の名前と紹介文が表示される
+rspec ./spec/system/02_after_login_spec.rb:69 # [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト サイドバーの確認 自分のユーザ編集画面へのリンクが存在する
+rspec ./spec/system/02_after_login_spec.rb:72 # [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト サイドバーの確認 「New book」と表示される
+rspec ./spec/system/02_after_login_spec.rb:75 # [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト サイドバーの確認 titleフォームが表示される
+rspec ./spec/system/02_after_login_spec.rb:78 # [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト サイドバーの確認 titleフォームに値が入っていない
+rspec ./spec/system/02_after_login_spec.rb:81 # [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト サイドバーの確認 bodyフォームが表示される
+rspec ./spec/system/02_after_login_spec.rb:84 # [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト サイドバーの確認 bodyフォームに値が入っていない
+rspec ./spec/system/02_after_login_spec.rb:87 # [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト サイドバーの確認 Create Bookボタンが表示される
+rspec ./spec/system/02_after_login_spec.rb:98 # [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト 投稿成功のテスト 自分の新しい投稿が正しく保存される
+rspec ./spec/system/02_after_login_spec.rb:101 # [STEP2] ユーザログイン後のテスト 投稿一覧画面のテスト 投稿成功のテスト リダイレクト先が、保存できた投稿の詳細画面になっている
+rspec ./spec/system/02_after_login_spec.rb:114 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 表示内容の確認 URLが正しい
+rspec ./spec/system/02_after_login_spec.rb:117 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 表示内容の確認 「Book detail」と表示される
+rspec ./spec/system/02_after_login_spec.rb:120 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 表示内容の確認 ユーザ画像・名前のリンク先が正しい
+rspec ./spec/system/02_after_login_spec.rb:123 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 表示内容の確認 投稿のtitleが表示される
+rspec ./spec/system/02_after_login_spec.rb:126 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 表示内容の確認 投稿のbodyが表示される
+rspec ./spec/system/02_after_login_spec.rb:129 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 表示内容の確認 投稿の編集リンクが表示される
+rspec ./spec/system/02_after_login_spec.rb:132 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 表示内容の確認 投稿の削除リンクが表示される
+rspec ./spec/system/02_after_login_spec.rb:138 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト サイドバーの確認 自分の名前と紹介文が表示される
+rspec ./spec/system/02_after_login_spec.rb:142 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト サイドバーの確認 自分のユーザ編集画面へのリンクが存在する
+rspec ./spec/system/02_after_login_spec.rb:145 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト サイドバーの確認 「New book」と表示される
+rspec ./spec/system/02_after_login_spec.rb:148 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト サイドバーの確認 titleフォームが表示される
+rspec ./spec/system/02_after_login_spec.rb:151 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト サイドバーの確認 titleフォームに値が入っていない
+rspec ./spec/system/02_after_login_spec.rb:154 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト サイドバーの確認 bodyフォームが表示される
+rspec ./spec/system/02_after_login_spec.rb:157 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト サイドバーの確認 bodyフォームに値が入っていない
+rspec ./spec/system/02_after_login_spec.rb:160 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト サイドバーの確認 Create Bookボタンが表示される
+rspec ./spec/system/02_after_login_spec.rb:171 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 投稿成功のテスト 自分の新しい投稿が正しく保存される
+rspec ./spec/system/02_after_login_spec.rb:180 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 編集リンクのテスト 編集画面に遷移する
+rspec ./spec/system/02_after_login_spec.rb:189 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 削除リンクのテスト application.html.erbにjavascript_pack_tagを含んでいる
+rspec ./spec/system/02_after_login_spec.rb:203 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 削除リンクのテスト 正しく削除される
+rspec ./spec/system/02_after_login_spec.rb:206 # [STEP2] ユーザログイン後のテスト 自分の投稿詳細画面のテスト 削除リンクのテスト リダイレクト先が、投稿一覧画面になっている
+rspec ./spec/system/02_after_login_spec.rb:218 # [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 表示の確認 URLが正しい
+rspec ./spec/system/02_after_login_spec.rb:221 # [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 表示の確認 「Editing Book」と表示される
+rspec ./spec/system/02_after_login_spec.rb:224 # [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 表示の確認 title編集フォームが表示される
+rspec ./spec/system/02_after_login_spec.rb:227 # [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 表示の確認 body編集フォームが表示される
+rspec ./spec/system/02_after_login_spec.rb:230 # [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 表示の確認 Update Bookボタンが表示される
+rspec ./spec/system/02_after_login_spec.rb:233 # [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 表示の確認 Showリンクが表示される
+rspec ./spec/system/02_after_login_spec.rb:236 # [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 表示の確認 Backリンクが表示される
+rspec ./spec/system/02_after_login_spec.rb:250 # [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 編集成功のテスト titleが正しく更新される
+rspec ./spec/system/02_after_login_spec.rb:253 # [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 編集成功のテスト bodyが正しく更新される
+rspec ./spec/system/02_after_login_spec.rb:256 # [STEP2] ユーザログイン後のテスト 自分の投稿編集画面のテスト 編集成功のテスト リダイレクト先が、更新した投稿の詳細画面になっている
+rspec ./spec/system/02_after_login_spec.rb:269 # [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト 表示内容の確認 URLが正しい
+rspec ./spec/system/02_after_login_spec.rb:272 # [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト 表示内容の確認 自分と他人の画像が表示される: fallbackの画像がサイドバーの1つ＋一覧(2人)の2つの計3つ存在する
+rspec ./spec/system/02_after_login_spec.rb:275 # [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト 表示内容の確認 自分と他人の名前がそれぞれ表示される
+rspec ./spec/system/02_after_login_spec.rb:279 # [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト 表示内容の確認 自分と他人のshowリンクがそれぞれ表示される
+rspec ./spec/system/02_after_login_spec.rb:286 # [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト サイドバーの確認 自分の名前と紹介文が表示される
+rspec ./spec/system/02_after_login_spec.rb:290 # [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト サイドバーの確認 自分のユーザ編集画面へのリンクが存在する
+rspec ./spec/system/02_after_login_spec.rb:293 # [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト サイドバーの確認 「New book」と表示される
+rspec ./spec/system/02_after_login_spec.rb:296 # [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト サイドバーの確認 titleフォームが表示される
+rspec ./spec/system/02_after_login_spec.rb:299 # [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト サイドバーの確認 titleフォームに値が入っていない
+rspec ./spec/system/02_after_login_spec.rb:302 # [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト サイドバーの確認 bodyフォームが表示される
+rspec ./spec/system/02_after_login_spec.rb:305 # [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト サイドバーの確認 bodyフォームに値が入っていない
+rspec ./spec/system/02_after_login_spec.rb:308 # [STEP2] ユーザログイン後のテスト ユーザ一覧画面のテスト サイドバーの確認 Create Bookボタンが表示される
+rspec ./spec/system/02_after_login_spec.rb:320 # [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト 表示の確認 URLが正しい
+rspec ./spec/system/02_after_login_spec.rb:323 # [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト 表示の確認 投稿一覧のユーザ画像のリンク先が正しい
+rspec ./spec/system/02_after_login_spec.rb:326 # [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト 表示の確認 投稿一覧に自分の投稿のtitleが表示され、リンクが正しい
+rspec ./spec/system/02_after_login_spec.rb:329 # [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト 表示の確認 投稿一覧に自分の投稿のbodyが表示される
+rspec ./spec/system/02_after_login_spec.rb:332 # [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト 表示の確認 他人の投稿は表示されない
+rspec ./spec/system/02_after_login_spec.rb:340 # [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト サイドバーの確認 自分の名前と紹介文が表示される
+rspec ./spec/system/02_after_login_spec.rb:344 # [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト サイドバーの確認 自分のユーザ編集画面へのリンクが存在する
+rspec ./spec/system/02_after_login_spec.rb:347 # [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト サイドバーの確認 「New book」と表示される
+rspec ./spec/system/02_after_login_spec.rb:350 # [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト サイドバーの確認 titleフォームが表示される
+rspec ./spec/system/02_after_login_spec.rb:353 # [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト サイドバーの確認 titleフォームに値が入っていない
+rspec ./spec/system/02_after_login_spec.rb:356 # [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト サイドバーの確認 bodyフォームが表示される
+rspec ./spec/system/02_after_login_spec.rb:359 # [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト サイドバーの確認 bodyフォームに値が入っていない
+rspec ./spec/system/02_after_login_spec.rb:362 # [STEP2] ユーザログイン後のテスト 自分のユーザ詳細画面のテスト サイドバーの確認 Create Bookボタンが表示される
+rspec ./spec/system/02_after_login_spec.rb:374 # [STEP2] ユーザログイン後のテスト 自分のユーザ情報編集画面のテスト 表示の確認 URLが正しい
+rspec ./spec/system/02_after_login_spec.rb:377 # [STEP2] ユーザログイン後のテスト 自分のユーザ情報編集画面のテスト 表示の確認 名前編集フォームに自分の名前が表示される
+rspec ./spec/system/02_after_login_spec.rb:380 # [STEP2] ユーザログイン後のテスト 自分のユーザ情報編集画面のテスト 表示の確認 画像編集フォームが表示される
+rspec ./spec/system/02_after_login_spec.rb:383 # [STEP2] ユーザログイン後のテスト 自分のユーザ情報編集画面のテスト 表示の確認 自己紹介編集フォームに自分の自己紹介文が表示される
+rspec ./spec/system/02_after_login_spec.rb:386 # [STEP2] ユーザログイン後のテスト 自分のユーザ情報編集画面のテスト 表示の確認 Update Userボタンが表示される
+rspec ./spec/system/02_after_login_spec.rb:402 # [STEP2] ユーザログイン後のテスト 自分のユーザ情報編集画面のテスト 更新成功のテスト nameが正しく更新される
+rspec ./spec/system/02_after_login_spec.rb:405 # [STEP2] ユーザログイン後のテスト 自分のユーザ情報編集画面のテスト 更新成功のテスト introductionが正しく更新される
+rspec ./spec/system/02_after_login_spec.rb:408 # [STEP2] ユーザログイン後のテスト 自分のユーザ情報編集画面のテスト 更新成功のテスト リダイレクト先が、自分のユーザ詳細画面になっている
+rspec ./spec/system/03_finishing_touches_spec.rb:12 # [STEP3] 仕上げのテスト サクセスメッセージのテスト ユーザ新規登録成功時
+rspec ./spec/system/03_finishing_touches_spec.rb:21 # [STEP3] 仕上げのテスト サクセスメッセージのテスト ユーザログイン成功時
+rspec ./spec/system/03_finishing_touches_spec.rb:28 # [STEP3] 仕上げのテスト サクセスメッセージのテスト ユーザログアウト成功時
+rspec ./spec/system/03_finishing_touches_spec.rb:38 # [STEP3] 仕上げのテスト サクセスメッセージのテスト ユーザのプロフィール情報更新成功時
+rspec ./spec/system/03_finishing_touches_spec.rb:47 # [STEP3] 仕上げのテスト サクセスメッセージのテスト 投稿データの新規投稿成功時: 投稿一覧画面から行います。
+rspec ./spec/system/03_finishing_touches_spec.rb:58 # [STEP3] 仕上げのテスト サクセスメッセージのテスト 投稿データの更新成功時
+rspec ./spec/system/03_finishing_touches_spec.rb:81 # [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザ新規登録失敗: nameを1文字にする 新規登録されない
+rspec ./spec/system/03_finishing_touches_spec.rb:84 # [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザ新規登録失敗: nameを1文字にする 新規登録画面を表示しており、フォームの内容が正しい
+rspec ./spec/system/03_finishing_touches_spec.rb:90 # [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザ新規登録失敗: nameを1文字にする バリデーションエラーが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:109 # [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザのプロフィール情報編集失敗: nameを1文字にする 更新されない
+rspec ./spec/system/03_finishing_touches_spec.rb:112 # [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザのプロフィール情報編集失敗: nameを1文字にする ユーザ編集画面を表示しており、フォームの内容が正しい
+rspec ./spec/system/03_finishing_touches_spec.rb:115 # [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザのプロフィール情報編集失敗: nameを1文字にする バリデーションエラーが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:131 # [STEP3] 仕上げのテスト 処理失敗時のテスト 投稿データの新規投稿失敗: 投稿一覧画面から行い、titleを空にする 投稿が保存されない
+rspec ./spec/system/03_finishing_touches_spec.rb:134 # [STEP3] 仕上げのテスト 処理失敗時のテスト 投稿データの新規投稿失敗: 投稿一覧画面から行い、titleを空にする 投稿一覧画面を表示している
+rspec ./spec/system/03_finishing_touches_spec.rb:140 # [STEP3] 仕上げのテスト 処理失敗時のテスト 投稿データの新規投稿失敗: 投稿一覧画面から行い、titleを空にする 新規投稿フォームの内容が正しい
+rspec ./spec/system/03_finishing_touches_spec.rb:144 # [STEP3] 仕上げのテスト 処理失敗時のテスト 投稿データの新規投稿失敗: 投稿一覧画面から行い、titleを空にする バリデーションエラーが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:162 # [STEP3] 仕上げのテスト 処理失敗時のテスト 投稿データの更新失敗: titleを空にする 投稿が更新されない
+rspec ./spec/system/03_finishing_touches_spec.rb:165 # [STEP3] 仕上げのテスト 処理失敗時のテスト 投稿データの更新失敗: titleを空にする 投稿編集画面を表示しており、フォームの内容が正しい
+rspec ./spec/system/03_finishing_touches_spec.rb:170 # [STEP3] 仕上げのテスト 処理失敗時のテスト 投稿データの更新失敗: titleを空にする エラーメッセージが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:179 # [STEP3] 仕上げのテスト ログインしていない場合のアクセス制限のテスト: アクセスできず、ログイン画面に遷移する ユーザ一覧画面
+rspec ./spec/system/03_finishing_touches_spec.rb:183 # [STEP3] 仕上げのテスト ログインしていない場合のアクセス制限のテスト: アクセスできず、ログイン画面に遷移する ユーザ詳細画面
+rspec ./spec/system/03_finishing_touches_spec.rb:187 # [STEP3] 仕上げのテスト ログインしていない場合のアクセス制限のテスト: アクセスできず、ログイン画面に遷移する ユーザ情報編集画面
+rspec ./spec/system/03_finishing_touches_spec.rb:191 # [STEP3] 仕上げのテスト ログインしていない場合のアクセス制限のテスト: アクセスできず、ログイン画面に遷移する 投稿一覧画面
+rspec ./spec/system/03_finishing_touches_spec.rb:195 # [STEP3] 仕上げのテスト ログインしていない場合のアクセス制限のテスト: アクセスできず、ログイン画面に遷移する 投稿詳細画面
+rspec ./spec/system/03_finishing_touches_spec.rb:199 # [STEP3] 仕上げのテスト ログインしていない場合のアクセス制限のテスト: アクセスできず、ログイン画面に遷移する 投稿編集画面
+rspec ./spec/system/03_finishing_touches_spec.rb:219 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト 表示内容の確認 URLが正しい
+rspec ./spec/system/03_finishing_touches_spec.rb:222 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト 表示内容の確認 「Book detail」と表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:225 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト 表示内容の確認 ユーザ画像・名前のリンク先が正しい
+rspec ./spec/system/03_finishing_touches_spec.rb:228 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト 表示内容の確認 投稿のtitleが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:231 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト 表示内容の確認 投稿のopinionが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:234 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト 表示内容の確認 投稿の編集リンクが表示されない
+rspec ./spec/system/03_finishing_touches_spec.rb:237 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト 表示内容の確認 投稿の削除リンクが表示されない
+rspec ./spec/system/03_finishing_touches_spec.rb:243 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト サイドバーの確認 他人の名前と紹介文が表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:247 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト サイドバーの確認 他人のユーザ編集画面へのリンクが存在する
+rspec ./spec/system/03_finishing_touches_spec.rb:250 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト サイドバーの確認 自分の名前と紹介文は表示されない
+rspec ./spec/system/03_finishing_touches_spec.rb:254 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿詳細画面のテスト サイドバーの確認 自分のユーザ編集画面へのリンクは存在しない
+rspec ./spec/system/03_finishing_touches_spec.rb:265 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人の投稿編集画面 遷移できず、投稿一覧画面にリダイレクトされる
+rspec ./spec/system/03_finishing_touches_spec.rb:278 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ詳細画面のテスト 表示の確認 URLが正しい
+rspec ./spec/system/03_finishing_touches_spec.rb:281 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ詳細画面のテスト 表示の確認 投稿一覧のユーザ画像のリンク先が正しい
+rspec ./spec/system/03_finishing_touches_spec.rb:284 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ詳細画面のテスト 表示の確認 投稿一覧に他人の投稿のtitleが表示され、リンクが正しい
+rspec ./spec/system/03_finishing_touches_spec.rb:287 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ詳細画面のテスト 表示の確認 投稿一覧に他人の投稿のopinionが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:290 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ詳細画面のテスト 表示の確認 自分の投稿は表示されない
+rspec ./spec/system/03_finishing_touches_spec.rb:297 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ詳細画面のテスト サイドバーの確認 他人の名前と紹介文が表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:301 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ詳細画面のテスト サイドバーの確認 他人のユーザ編集画面へのリンクが存在する
+rspec ./spec/system/03_finishing_touches_spec.rb:304 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ詳細画面のテスト サイドバーの確認 自分の名前と紹介文は表示されない
+rspec ./spec/system/03_finishing_touches_spec.rb:308 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ詳細画面のテスト サイドバーの確認 自分のユーザ編集画面へのリンクは存在しない
+rspec ./spec/system/03_finishing_touches_spec.rb:315 # [STEP3] 仕上げのテスト 他人の画面のテスト 他人のユーザ情報編集画面 遷移できず、自分のユーザ詳細画面にリダイレクトされる
+rspec ./spec/system/03_finishing_touches_spec.rb:332 # [STEP3] 仕上げのテスト グリッドシステムのテスト: container, row, col-md-〇を正しく使えている ユーザ一覧画面
+rspec ./spec/system/03_finishing_touches_spec.rb:337 # [STEP3] 仕上げのテスト グリッドシステムのテスト: container, row, col-md-〇を正しく使えている ユーザ詳細画面
+rspec ./spec/system/03_finishing_touches_spec.rb:342 # [STEP3] 仕上げのテスト グリッドシステムのテスト: container, row, col-md-〇を正しく使えている 投稿一覧画面
+rspec ./spec/system/03_finishing_touches_spec.rb:347 # [STEP3] 仕上げのテスト グリッドシステムのテスト: container, row, col-md-〇を正しく使えている 投稿詳細画面
+rspec ./spec/system/03_finishing_touches_spec.rb:362 # [STEP3] 仕上げのテスト アイコンのテスト トップ画面 本のアイコンが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:374 # [STEP3] 仕上げのテスト アイコンのテスト アバウト画面 本のアイコンが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:386 # [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしていない場合 Homeリンクのアイコンが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:389 # [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしていない場合 Aboutリンクのアイコンが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:392 # [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしていない場合 Sign upリンクのアイコンが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:395 # [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしていない場合 Log inリンクのアイコンが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:410 # [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしている場合 Homeリンクのアイコンが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:413 # [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしている場合 Usersリンクのアイコンが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:416 # [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしている場合 Booksリンクのアイコンが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:419 # [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしている場合 Log outリンクのアイコンが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:434 # [STEP3] 仕上げのテスト アイコンのテスト サイドバー ユーザ一覧画面でレンチアイコンが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:438 # [STEP3] 仕上げのテスト アイコンのテスト サイドバー ユーザ詳細画面でレンチアイコンが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:442 # [STEP3] 仕上げのテスト アイコンのテスト サイドバー 投稿一覧画面でレンチアイコンが表示される
+rspec ./spec/system/03_finishing_touches_spec.rb:446 # [STEP3] 仕上げのテスト アイコンのテスト サイドバー 投稿詳細画面でレンチアイコンが表示される
+

@@ -17,7 +17,7 @@
             <tr>
               <td>
                 <%= link_to user_path(book.user) do %>
-                  <%= image_tag book.user.avatar.attached? ? book.user.avatar : "no_image.jpg", style: "width: 50px; height: 50px; object-fit: cover;" %></td>
+                  <%= image_tag book.user.profile_image.attached? ? book.user.profile_image : "no_image.jpg", style: "width: 50px; height: 50px; object-fit: cover;" %></td>
                 <% end %>
               </td>
               <td>
