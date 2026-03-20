@@ -7,5 +7,7 @@ class User < ApplicationRecord
 
   validates :name, uniqueness: true, length: { in: 2..20 }
   validates :introduction, length: { maximum: 50 }
+  validates :password, length: { minimum: 6 }, allow_nil: true
+
 
 end
