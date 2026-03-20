@@ -26,7 +26,7 @@ class BooksController < ApplicationController
       redirect_to book_path(@new_book), notice: "Book created successfully!"
     else
       @user = Current.session.user
-      @books = @user.books
+      @books = Book.all
       render 'users/show', status: :unprocessable_entity
     end
   end
@@ -59,7 +59,7 @@ class BooksController < ApplicationController
   def correct_book_user
     @book = Book.find(params[:id])
     unless @book.user == Current.session.user
-      redirect_to book_path(@book), alert: "Access error! You can't edit other users' books."
+      redirect_to books_path, alert: "Access error! You can't edit other users' books."
     end
   end
   
