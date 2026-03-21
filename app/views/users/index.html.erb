@@ -1,15 +1,15 @@
-<div class="container px-5 px-sm-0">
+<div class="container px-5 px-sm-0 mt-3">
   <div class="row">
     <%= render 'users/user_info' %>
 
     <div class="col-md-8 offset-md-1">
-      <h2>Users</h2>
+      <h2 style="border-bottom: 1px solid #ccc;">Users</h2>
       <table class="table">
-        <thead>
+        <thead style="border-bottom: 2px solid #ccc;">
           <tr>
-            <th>image</th>
-            <th>name</th>
-            <th></th>
+            <th style="width: 40%;">image</th>
+            <th style="width: 30%;">name</th>
+            <th style="width: 30%;"></th>
           </tr>
         </thead>
         <tbody>
@@ -17,13 +17,13 @@
             <tr>
               <td>
                 <% if user.profile_image.attached? %>
-                  <%= image_tag user.profile_image, style: "width: 50px; height: 50px; object-fit: cover;" %>
+                  <%= image_tag user.profile_image, style: "width: 50px; height: 50px; object-fit: cover; border: 1px solid #ccc;" %>
                 <% else %>
-                  <%= image_tag "no_image.jpg", style: "width: 50px; height: 50px; object-fit: cover;" %>
+                  <%= image_tag "no_image.jpg", style: "width: 50px; height: 50px; object-fit: cover; border: 1px solid #ccc;" %>
                 <% end %>
               </td>
               <td><%= user.name %></td>
-              <td><%= link_to "Show", user_path(user) %></td>
+              <td><%= link_to "Show", user_path(user), class: "text-decoration-none hover-underline" %></td>
             </tr>
           <% end %>
         </tbody>

@@ -1,3 +1,5 @@
+.hover-underline:hover { text-decoration: underline !important; }
+tbody tr:last-child td { border-bottom: none; }
 /*
  * This is a manifest file that'll be compiled into application.css.
  *

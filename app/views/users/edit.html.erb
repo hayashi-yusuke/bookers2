@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container mt-3">
   <div class="row">
-    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
+    <div class="col-5 mx-auto">
       <h2>User info</h2>
 
       <%= form_with model: @user, html: { multipart: true } do |f| %>
@@ -18,15 +18,15 @@
 
         <div class="form-group">
           <label>Name</label>
-          <%= f.text_field :name, class: "form-control" %>
+          <%= f.text_field :name, class: "form-control mt-2 mb-3" %>
         </div>
         <div class="form-group">
           <label>Image</label><br>
-          <%= f.file_field :profile_image, class: "form-control-file", accept: "image/*" %>
+          <%= f.file_field :profile_image, class: "form-control-file mt-2 mb-3 ", accept: "image/*" %>
         </div>
         <div class="form-group">
           <label>Introduction</label>
-          <%= f.text_area :introduction, class: "form-control" %>
+          <%= f.text_area :introduction, class: "form-control mt-2 mb-3" %>
         </div>
         <div class="form-group">
           <%= f.submit "Update User", class: "btn btn-secondary" %>

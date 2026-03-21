@@ -1,14 +1,14 @@
-<div class="container px-5 px-sm-0">
+<div class="container px-5 px-sm-0 mt-3">
   <div class="row">
     <%= render 'users/user_info' %>
 
     <div class="col-md-8 offset-md-1">
-      <h2>Books</h2>
+      <h2 style="border-bottom: 1px solid #ccc;">Books</h2>
       <table class="table table-hover">
-        <thead>
+        <thead style="border-bottom: 2px solid #ccc;">
           <tr>
-            <th></th>
-            <th>Title</th>
+            <th style="width: 80px;"></th>
+            <th style="width: 210px;">Title</th>
             <th>Opinion</th>
           </tr>
         </thead>
@@ -18,13 +18,13 @@
               <td>
                 <%= link_to user_path(book.user) do %>
                   <% if book.user.profile_image.attached? %>
-                    <%= image_tag book.user.profile_image, style: "width: 50px; height: 50px; object-fit: cover;" %>
+                    <%= image_tag book.user.profile_image, style: "width: 80px; height: 80px; object-fit: cover; border: 1px solid #ccc;" %>
                   <% else %>
-                    <%= image_tag "no_image.jpg", style: "width: 50px; height: 50px; object-fit: cover;" %>
+                    <%= image_tag "no_image.jpg", style: "width: 80px; height: 80px; object-fit: cover; border: 1px solid #ccc;" %>
                   <% end %>
                 <% end %>
               </td>
-              <td><%= link_to book.title, book_path(book), style: "text-decoration: none;" %></td>
+              <td><%= link_to book.title, book_path(book), class: "text-decoration-none hover-underline" %></td>
               <td><%= book.body %></td>
             </tr>
           <% end %>
