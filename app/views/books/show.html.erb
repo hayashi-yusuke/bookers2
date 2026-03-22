@@ -20,6 +20,17 @@
             <td><%= link_to "Edit", edit_book_path(@book), class: "btn btn-sm", style: "background-color: #28a745; color: white;"  %></td>
             <td><%= link_to "Destroy", book_path(@book), data: { turbo_method: :delete, turbo_confirm: "本当に消しますか？" }, class: "btn btn-danger btn-sm" %></td>
           <% end %>
+          <td style="white-space: nowrap;">
+            <% if @book.favorited_by?(Current.user) %>
+              <%= link_to book_favorite_path(@book), data: { turbo_method: :delete } do %>
+                ♥ <%= @book.favorites.count %>
+              <% end %>
+            <% else %>
+              <%= link_to book_favorite_path(@book), data: { turbo_method: :post } do %>
+                ♡ <%= @book.favorites.count %>
+              <% end %>
+            <% end %>
+          </td>
         </tr>
       </table>
     </div>
