@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   get "homes/top"
   get "home/about", to: "homes#about", as: "homes_about"
 
-  resources :books
+  resources :books do
+    resource :favorite, only: [:create, :destroy]
+  end
   get "/users/new", to: redirect("/users/sign_up")
   get '/users/sign_up', to: 'users#new', as: 'sign_up'
   resources :users, only: [:new, :create, :index, :show, :edit, :update]
