@@ -10,6 +10,7 @@
             <th style="width: 20%;"></th>
             <th style="width: 40%;">Title</th>
             <th style="width: 40%;">Opinion</th>
+            <th>コメント</th>
           </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
                 <%= link_to book.title, book_path(book), style: "text-decoration: none;" %>
               </td>
               <td><%= book.body %></td>
+              <td><%= book.book_comments.count %></td>
             </tr>
           <% end %>
         </tbody>

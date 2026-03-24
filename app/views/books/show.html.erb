@@ -33,6 +33,23 @@
           </td>
         </tr>
       </table>
+
+      <%# コメント一覧 %>
+      <p>コメント数: <%= @book.book_comments.count %></p>
+      <% @book.book_comments.each do |book_comment| %>
+        <p><%= book_comment.user.name %></p>
+        <p><%= book_comment.created_at.strftime('%Y/%m/%d') %></p>
+        <p><%= book_comment.comment %></p>
+        <% if book_comment.user == Current.user %>
+          <%= link_to "削除", book_book_comment_path(@book, book_comment), data: {turbo_method: :delete }, class: "btn btn-danger btn-sm" %>
+        <% end %>
+      <% end %>
+
+      <%# コメント投稿フォーム %>
+      <%= form_with model: [@book, @book_comment] do |f| %>
+        <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+        <%= f.submit "送信する" %>
+      <% end %>
     </div>
   </div>
 </div>
