@@ -10,9 +10,9 @@ Rails.application.routes.draw do
   get "/users/new", to: redirect("/users/sign_up")
   get '/users/sign_up', to: 'users#new', as: 'sign_up'
   resources :users, only: [:new, :create, :index, :show, :edit, :update] do
-    resource :relationships, only: [:create, :destroy]
-      get "followings" => "relationship#followings", as: "followings"
-      get "followers" => "relationship#followers", as: "followers"
+    resource :relationship, only: [:create, :destroy]
+      get "followings" => "relationships#followings", as: "followings"
+      get "followers" => "relationships#followers", as: "followers"
   end
   resource :session, only: [:new, :create, :destroy]
   resources :passwords, param: :token

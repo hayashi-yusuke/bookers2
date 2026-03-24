@@ -8,18 +8,18 @@ class User < ApplicationRecord
   has_one_attached :profile_image
 
   #フォロー機能
-  has_many :active_relacionships, class_name: "RelacionShip", foreign_key: "follower_id", dependent: :destroy
-  has_many :passive_relacionships, class_name: "RelacionShip", foreign_key: "followed_id", dependent: :destroy
-  has_many :followings, through: active_relacionships, source: :followed
-  has_many :followers, through: passive_relacionships, source: :follower
+  has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  has_many :followings, through: :active_relationships, source: :followed
+  has_many :followers, through: :passive_relationships, source: :follower
 
   #指定したユーザーをフォロー
   def follow(user)
-    active_relacionships.create(followed_id: user.id)
+    active_relationships.create(followed_id: user.id)
   end
   #指定したユーザーのフォローを解除
   def unfollow(user)
-    active_relacionships.find_by(followed_id: user.id).destroy
+    active_relationships.find_by(followed_id: user.id).destroy
   end
   #指定したユーザーをフォローしているかを判定
   def following?(user)
