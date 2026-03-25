@@ -1,0 +1,3 @@
+<%= turbo_stream.update dom_id(@book, :favorite) do %>
+  <%= render 'favorites/favorite_btn', book: @book %>
+<% end %>

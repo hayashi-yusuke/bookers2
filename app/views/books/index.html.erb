@@ -27,17 +27,11 @@
               </td>
               <td><%= link_to book.title, book_path(book), class: "text-decoration-none hover-underline" %></td>
               <td><%= book.body %></td>
-              <td>
-                <% if book.favorited_by?(Current.user) %>
-                  <%= link_to book_favorite_path(book), data: { turbo_method: :delete } do %>
-                    ♥ <%= book.favorites.count %>
+                <td style="white-space: nowrap;">
+                  <%= turbo_frame_tag dom_id(book, :favorite) do %>
+                    <%= render 'favorites/favorite_btn', book: book %>
                   <% end %>
-                <% else %>
-                  <%= link_to book_favorite_path(book), data: { turbo_method: :post } do %>
-                    ♡ <%= book.favorites.count %>
-                  <% end %>
-                <% end %>
-              </td>
+                </td>
               <td>
                 <%= book.book_comments.count %>
               </td>
