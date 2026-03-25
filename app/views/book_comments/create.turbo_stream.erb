@@ -1,0 +1,10 @@
+<%= turbo_stream.update "book_comments" do %>
+  <%= render 'book_comments/book_comments', book: @book %>
+<% end %>
+
+<%= turbo_stream.update "book_comment_form" do %>
+  <%= form_with model: [@book, @book_comment], id: "book_comment_form" do |f| %>
+    <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+    <%= f.submit "送信する" %>
+  <% end %>
+<% end %>
