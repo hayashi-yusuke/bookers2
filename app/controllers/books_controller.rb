@@ -4,7 +4,10 @@ class BooksController < ApplicationController
 
 
   def index
-    @books = Book.all
+    @books = Book.left_joins(:favorites)
+                 .where(favorites: { created_at: 1.week.ago.. })
+                 .group(:id)
+                 .order('COUNT(favorites.id) DESC')
     @user = Current.session.user
     @new_book = Book.new
   end

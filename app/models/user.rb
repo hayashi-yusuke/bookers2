@@ -4,6 +4,8 @@ class User < ApplicationRecord
   has_many :books, dependent: :destroy # アソシエーション
   has_many :favorites, dependent: :destroy
   has_many :book_comments, dependent: :destroy
+  has_many :sent_messages, class_name: "Message", foreign_key: "sender_id", dependent: :destroy
+  has_many :received_messages, class_name: "Message", foreign_key: "receiver_id", dependent: :destroy
   normalizes :email_address, with: ->(e) { e.strip.downcase }
   has_one_attached :profile_image
 
@@ -25,7 +27,6 @@ class User < ApplicationRecord
   def following?(user)
     followings.include?(user)
   end
-
 
   validates :name, uniqueness: true, length: { in: 2..20 }
   validates :introduction, length: { maximum: 50 }

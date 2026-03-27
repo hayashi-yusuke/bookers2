@@ -7,12 +7,14 @@ Rails.application.routes.draw do
     resource :favorite, only: [:create, :destroy]
     resources :book_comments, only: [:create, :destroy]
   end
+
   get "/users/new", to: redirect("/users/sign_up")
   get '/users/sign_up', to: 'users#new', as: 'sign_up'
   resources :users, only: [:new, :create, :index, :show, :edit, :update] do
     resource :relationship, only: [:create, :destroy]
       get "followings" => "relationships#followings", as: "followings"
       get "followers" => "relationships#followers", as: "followers"
+      resources :messages, only: [:index, :create]
   end
   resource :session, only: [:new, :create, :destroy]
   resources :passwords, param: :token
