@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
     ).order(:created_at)
 
     #新規メッセージ用の空オブジェクト
-    @messages = Message.new
+    @message = Message.new
 
     #サイドバー用：過去にDMしたユーザー一覧
     partner_ids = Message.where("sender_id = :me", me: Current.user.id).pluck(:receiver_id) +
