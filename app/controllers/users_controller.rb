@@ -28,6 +28,25 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @new_book = Book.new
     @books = @user.books
+
+    # 今日の投稿数
+    @today_books_count = @user.books.where(created_at: Time.zone.now.all_day).count
+
+    # 前日の投稿数
+    @yesterday_books_count = @user.books.where(created_at: 1.day.ago.all_day).count
+
+    # 今日 / 前日の比率（前日が0のときは0にする）
+    @today_yesterday_rate = @yesterday_books_count == 0 ? "0%" : "#{(@today_books_count.to_f / @yesterday_books_count * 100).round}%"
+
+    # 今週の投稿数（土曜始まり）
+    @this_week_books_count = @user.books.where(created_at: Time.zone.now.beginning_of_week(:saturday)..Time.zone.now.end_of_week(:friday)).count
+
+    # 先週の投稿数（土曜始まり）
+    @last_week_books_count = @user.books.where(created_at: 1.week.ago.beginning_of_week(:saturday)..1.week.ago.end_of_week(:friday)).count
+
+    # 今週 / 先週の比率（先週が0のときは0にする）
+    @this_last_week_rate = @last_week_books_count == 0 ? "0%" : "#{(@this_week_books_count.to_f / @last_week_books_count * 100).round}%"
+
   end
 
   def edit

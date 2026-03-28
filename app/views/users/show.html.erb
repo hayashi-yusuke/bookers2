@@ -30,6 +30,47 @@
           <% end %>
         </tbody>
       </table>
+      <!-- 投稿数の統計 -->
+      <h2 class="mt-3">投稿数の前日比・前週比</h2>
+
+      <!-- 今日・前日・前日比 -->
+      <table class="table table-bordered" style="width: 80%;">
+        <thead>
+          <tr>
+            <th>今日の投稿数</th>
+            <th>前日の投稿数</th>
+            <th>前日比</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= @today_books_count %></td>
+            <td><%= @yesterday_books_count %></td>
+            <td><%= @today_yesterday_rate %></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- 間を開ける -->
+      <div class="mt-4"></div>
+
+      <!-- 今週・先週・先週比 -->
+      <table class="table table-bordered" style="width: 80%;">
+        <thead>
+          <tr>
+            <th>今週の投稿数</th>
+            <th>先週の投稿数</th>
+            <th>先週比</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= @this_week_books_count %></td>
+            <td><%= @last_week_books_count %></td>
+            <td><%= @this_last_week_rate %></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
