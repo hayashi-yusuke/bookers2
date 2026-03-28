@@ -32,5 +32,4 @@ class User < ApplicationRecord
   validates :introduction, length: { maximum: 50 }
   validates :password, length: { minimum: 6 }, allow_nil: true
 
-
 end

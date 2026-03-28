@@ -5,9 +5,8 @@ class BooksController < ApplicationController
 
   def index
     @books = Book.left_joins(:favorites)
-                 .where(favorites: { created_at: 1.week.ago.. })
                  .group(:id)
-                 .order('COUNT(favorites.id) DESC')
+                 .order(Arel.sql("COUNT(CASE WHEN favorites.created_at >= '#{1.week.ago}' THEN 1 END) DESC"))
     @user = Current.session.user
     @new_book = Book.new
   end
@@ -17,6 +16,9 @@ class BooksController < ApplicationController
     @user = @book.user
     @new_book = Book.new
     @book_comment = BookComment.new
+
+    # 詳細ページを開くたびに閲覧数を+1する
+    @book.increment!(:views_count)
   end
 
   def new
