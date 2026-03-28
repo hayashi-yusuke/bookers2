@@ -1,10 +1,12 @@
 class MessagesController < ApplicationController
   before_action :set_other_user
+  before_action :check_mutual_follow
+
 
   def index
     #自分と相手のメッセージ両方向で取得（時系列順）
     @messages = Message.where(
-      "(sender_id = :me AND receiver_id = :other) OR (sender_id = :other AND receiver_id = me)",
+      "(sender_id = :me AND receiver_id = :other) OR (sender_id = :other AND receiver_id = :me)",
       me: Current.user.id, other: @other_user.id
     ).order(:created_at)
 
@@ -46,7 +48,20 @@ class MessagesController < ApplicationController
   end
 
     # フォームから受け取っていい項目を content だけに制限する
-  def massage_params
-    params.require(:massage).permit(:content)
+  def message_params
+    params.require(:message).permit(:content)
+  end
+
+    # 相互フォローか確認するメソッド
+  def check_mutual_follow
+    # 自分が相手をフォローしているか？
+    following = Current.user.following?(@other_user)
+    # 相手が自分をフォローしているか？
+    followed  = Current.user.followers.include?(@other_user)
+
+    # どちらかがfalseなら弾く
+    unless following && followed
+      redirect_to root_path, alert: "相互フォローの相手とのみDMできます"
+    end
   end
 end

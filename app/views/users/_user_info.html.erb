@@ -40,6 +40,10 @@
   <div class="row">
     <% if Current.user != @user %>
       <td><%= render "relationships/btn", user: @user, options: { class: ""} %></td>
+      <!-- 相互フォローのときだけDMボタンを表示 -->
+      <% if Current.user.following?(@user) && @user.following?(Current.user) %>
+        <%= link_to "DMを送る", user_messages_path(@user), class: "btn btn-outline-primary mt-2", style: "width: 100%;" %>
+      <% end %>
     <% else %>
       <%= link_to edit_user_path(@user), class: "btn btn-outline-secondary", style: "width: 100%;" do %>
         <i class="fa-solid fa-user-gear"></i>

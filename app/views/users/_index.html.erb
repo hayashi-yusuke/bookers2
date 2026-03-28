@@ -1,0 +1,28 @@
+<table class="table">
+  <thead style="border-bottom: 2px solid #ccc;">
+    <tr>
+      <th style="width: 40%;">image</th>
+      <th style="width: 30%;">name</th>
+      <th style="width: 30%;"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- 渡されたusersを1人ずつ取り出す -->
+    <% users.each do |user| %>
+      <tr>
+        <td>
+          <% if user.profile_image.attached? %>
+            <%= image_tag user.profile_image, style: "width: 50px; height: 50px; object-fit: cover; border: 1px solid #ccc;" %>
+          <% else %>
+            <%= image_tag "no_image.jpg", style: "width: 50px; height: 50px; object-fit: cover; border: 1px solid #ccc;" %>
+          <% end %>
+        </td>
+        <td><%= user.name %></td>
+        <td>フォロー数: <%= user.followings.count %></td>
+        <td>フォロワー数: <%= user.followers.count %></td>
+        <td><%= render "relationships/btn", user: user, options: { class: "follow-link" } %></td>
+        <td><%= link_to "Show", user_path(user), class: "text-decoration-none hover-underline" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
