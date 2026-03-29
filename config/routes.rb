@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   resources :groups, only: [:index, :show, :new, :create, :edit, :update] do
     resource :group_user, only: [:create, :destroy]
+    resource :notice, only: [:new, :create], controller: 'notices'
   end
 
   resources :books do
