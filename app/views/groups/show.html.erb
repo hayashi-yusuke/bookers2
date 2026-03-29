@@ -10,13 +10,39 @@
           <td>オーナー</td>
           <td><%= link_to @group.owner.name, user_path(@group.owner) %></td>
         </tr>
+        <tr>
+          <td>メンバー数</td>
+          <td><%= @group.group_users.count %>人</td>
+        </tr>
       </table>
 
       <!-- オーナーだけEditリンクを表示 -->
       <% if @group.owner == Current.user %>
         <%= link_to "Edit", edit_group_path(@group), class: "btn btn-outline-secondary" %>
+       
+       <!-- オーナー以外にJoin/Leaveボタンを表示 -->
+      <% elsif @group.members.include?(Current.user) %>
+        <%= button_to "Leave this group", group_group_user_path(@group), method: :delete, class: "btn btn-danger" %>
+      <% else %>
+        <%= button_to "Join this group", group_group_user_path(@group), method: :post, class: "btn btn-primary" %>
       <% end %>
 
+       <!-- メンバー一覧 -->
+      <h4 class="mt-4">メンバー一覧</h4>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>名前</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @group.members.each do |member| %>
+            <tr>
+              <td><%= link_to member.name, user_path(member) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

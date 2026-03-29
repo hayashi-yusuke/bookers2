@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get "group_users/create"
-  get "group_users/destroy"
   root "homes#top"
   get "homes/top"
   get "home/about", to: "homes#about", as: "homes_about"

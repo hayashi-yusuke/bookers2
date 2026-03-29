@@ -11,6 +11,7 @@
           <tr>
             <th>グループ名</th>
             <th>説明</th>
+            <th>メンバー数</th>
             <th></th>
           </tr>
         </thead>
@@ -19,6 +20,7 @@
             <tr>
               <td><%= link_to group.name, group_path(group) %></td>
               <td><%= group.introduction %></td>
+              <td><%= group.group_users.count %>人</td>
               <td>
                 <!-- オーナーだけEditリンクを表示 -->
                 <% if group.owner == Current.user %>
