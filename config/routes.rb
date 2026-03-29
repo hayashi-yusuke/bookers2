@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       get "followings" => "relationships#followings", as: "followings"
       get "followers" => "relationships#followers", as: "followers"
       resources :messages, only: [:index, :create]
+      get "books_on_date", on: :member
   end
   resource :session, only: [:new, :create, :destroy]
   resources :passwords, param: :token

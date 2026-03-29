@@ -90,7 +90,7 @@
         </tbody>
       </table>
       <!-- Chart.js グラフ -->
-      <h2 class="mt-3">7日間の投稿数の比較</h2>
+      <h6 class="mt-3 text-center" style="width: 80%;">7日間の投稿数の比較</h6>
       <div style="width: 80%;">
         <canvas id="weeklyChart"></canvas>
       </div>
@@ -126,6 +126,18 @@
           }
         });
       </script>
+      <!-- 指定した日の投稿数を表示するエリア -->
+      <div class="mt-3">
+        <!-- 日付選択フォーム -->
+        <%= form_with url: books_on_date_user_path(@user), method: :get, data: { turbo_frame: "books_on_date" } do |f| %>
+          <%= f.date_field :date, value: Date.today %>
+          <%= f.submit "検索", class: "btn btn-sm btn-primary" %>
+        <% end %>
+      </div>
+
+      <!-- ここだけ更新される！ -->
+      <turbo-frame id="books_on_date">
+      </turbo-frame>
     </div>
   </div>
 </div>

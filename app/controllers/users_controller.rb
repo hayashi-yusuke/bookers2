@@ -71,6 +71,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def books_on_date
+    @user = User.find(params[:id])
+    # 指定した日付を受け取る（なければ今日）
+    @date = params[:date].present? ? Date.parse(params[:date]) : Date.today
+    # 指定した日の投稿数を取得
+    @books_count = @user.books.where(created_at: @date.all_day).count
+  end
+
   private
  
   def user_params
