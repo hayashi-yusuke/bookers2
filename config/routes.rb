@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
+  get "group_users/create"
+  get "group_users/destroy"
   root "homes#top"
   get "homes/top"
   get "home/about", to: "homes#about", as: "homes_about"
 
-  resources :groups, only: [:index, :show, :new, :create, :edit, :update]
+  resources :groups, only: [:index, :show, :new, :create, :edit, :update] do
+    resource :group_user, only: [:create, :destroy]
+  end
 
   resources :books do
     resource :favorite, only: [:create, :destroy]
