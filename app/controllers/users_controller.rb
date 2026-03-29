@@ -47,6 +47,15 @@ class UsersController < ApplicationController
     # 今週 / 先週の比率（先週が0のときは0にする）
     @this_last_week_rate = @last_week_books_count == 0 ? "0%" : "#{(@this_week_books_count.to_f / @last_week_books_count * 100).round}%"
 
+    # 過去7日間の投稿数を日ごとに取得
+  @weekly_books = 7.times.map do |i|
+    date = i.days.ago.to_date
+    {
+      date: date.strftime("%m/%d"),
+      count: @user.books.where(created_at: date.all_day).count
+    }
+  end.reverse
+
   end
 
   def edit
