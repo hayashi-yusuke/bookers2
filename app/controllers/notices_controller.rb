@@ -2,8 +2,6 @@ class NoticesController < ApplicationController
   before_action :set_group
 
   def new
-    # メール作成フォーム用
-    @notice = Notice.new
   end
 
   def create

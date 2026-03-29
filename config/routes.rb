@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   root "homes#top"
   get "homes/top"
+
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
+
   get "home/about", to: "homes#about", as: "homes_about"
 
   resources :groups, only: [:index, :show, :new, :create, :edit, :update] do

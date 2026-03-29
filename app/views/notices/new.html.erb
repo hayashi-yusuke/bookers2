@@ -1,2 +1,26 @@
-<h1>Notices#new</h1>
-<p>Find me in app/views/notices/new.html.erb</p>
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h2>イベントのお知らせを送る</h2>
+
+      <%= form_with url: group_notice_path(@group), method: :post do |f| %>
+
+        <!-- タイトル -->
+        <div class="mb-3">
+          <p>タイトル</p>
+          <%= f.text_field :title, class: "form-control" %>
+        </div>
+
+        <!-- 本文 -->
+        <div class="mb-3">
+          <p>本文</p>
+          <%= f.text_area :body, class: "form-control", rows: 5 %>
+        </div>
+
+        <!-- 送信ボタン -->
+        <%= f.submit "送信する", class: "btn btn-primary" %>
+
+      <% end %>
+    </div>
+  </div>
+</div>
