@@ -3,6 +3,8 @@
     <%= render 'users/user_info' %>
 
     <div class="col-md-8 offset-md-1">
+      <%= link_to "グループを作成する", new_group_path, class: "btn btn-primary mb-2 me-2" %>
+      <%= link_to "グループ一覧", groups_path, class: "btn btn-outline-primary mb-2" %>
       <h2 style="border-bottom: 1px solid #ccc;">Users</h2>
       <table class="table">
         <thead style="border-bottom: 2px solid #ccc;">

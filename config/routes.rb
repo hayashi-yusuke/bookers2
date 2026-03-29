@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get "homes/top"
   get "home/about", to: "homes#about", as: "homes_about"
 
+  resources :groups, only: [:index, :show, :new, :create, :edit, :update]
+
   resources :books do
     resource :favorite, only: [:create, :destroy]
     resources :book_comments, only: [:create, :destroy]

@@ -1,0 +1,35 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-10 offset-md-1">
+
+      <!-- グループ作成ボタン -->
+      <%= link_to "グループを作成する", new_group_path, class: "btn btn-primary mb-3" %>
+
+      <h2 style="border-bottom: 1px solid #ccc;">グループ一覧</h2>
+      <table class="table table-hover">
+        <thead style="border-bottom: 2px solid #ccc;">
+          <tr>
+            <th>グループ名</th>
+            <th>説明</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @groups.each do |group| %>
+            <tr>
+              <td><%= link_to group.name, group_path(group) %></td>
+              <td><%= group.introduction %></td>
+              <td>
+                <!-- オーナーだけEditリンクを表示 -->
+                <% if group.owner == Current.user %>
+                  <%= link_to "Edit", edit_group_path(group), class: "btn btn-sm btn-outline-secondary" %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

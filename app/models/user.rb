@@ -6,6 +6,8 @@ class User < ApplicationRecord
   has_many :book_comments, dependent: :destroy
   has_many :sent_messages, class_name: "Message", foreign_key: "sender_id", dependent: :destroy
   has_many :received_messages, class_name: "Message", foreign_key: "receiver_id", dependent: :destroy
+  # グループ機能
+  has_many :owned_groups, class_name: "Group", foreign_key: "owner_id", dependent: :destroy
   normalizes :email_address, with: ->(e) { e.strip.downcase }
   has_one_attached :profile_image
 
