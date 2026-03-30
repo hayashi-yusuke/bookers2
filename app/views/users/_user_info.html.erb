@@ -62,6 +62,11 @@
       <p>Opinion</p>
       <%= f.text_area :body, class: "form-control" %>
     </div>
+    <div class="mb-3">
+      <p>評価</p>
+      <div id="post_raty"></div>
+    </div>
+
     <%= f.submit "Create Book", class: "btn", style: "background-color: #28a745; color: white;" %>
   <% end %>
 </div>

@@ -29,6 +29,7 @@ class BooksController < ApplicationController
     @new_book = Book.new(book_params)
     @new_book.user = Current.session.user
     if @new_book.save
+      Review.create(user: Current.session.user, book: @new_book, score: params[:book][:score])
       redirect_to book_path(@new_book), notice: "Book created successfully!"
     else
       @user = Current.session.user
@@ -59,7 +60,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body)
+    params.require(:book).permit(:title, :body, :score)
   end
 
   def correct_book_user
