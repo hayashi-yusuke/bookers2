@@ -29,6 +29,11 @@
               閲覧数: <%= @book.views_count %>
             </td>
             <td>
+              <% @book.tags.each do |tag| %>
+                <%= link_to tag.name, search_path(search_word: tag.name, category: "tag"), class: "badge bg-secondary text-decoration-none" %>
+              <% end %>
+            </td>
+            <td>
               評価: 
               <% if @book.reviews.exists? %>
                 <div id="show_raty_<%= @book.id %>" 

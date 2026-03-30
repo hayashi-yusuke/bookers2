@@ -38,6 +38,11 @@ class BooksController < ApplicationController
     @new_book.user = Current.session.user
     if @new_book.save
       Review.create(user: Current.session.user, book: @new_book, score: params[:book][:score])
+      # タグを保存する処理　←ここから
+      if params[:book][:tag_name].present?
+        tag = Tag.find_or_create_by(name: params[:book][:tag_name])
+        @new_book.tags << tag
+      end
       redirect_to book_path(@new_book), notice: "Book created successfully!"
     else
       @user = Current.session.user

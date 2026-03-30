@@ -9,6 +9,9 @@ class SearchesController < ApplicationController
       @records = search_model(User, :name)
     elsif @model == "Book"
       @records = search_model(Book, :title)
+    elsif @model == "Tag"  # ← 追加
+      @records = Tag.where(name: params[:search_word])
+                    .first&.books || []
     end
   end
 

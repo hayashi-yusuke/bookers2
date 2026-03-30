@@ -63,6 +63,10 @@
       <%= f.text_area :body, class: "form-control" %>
     </div>
     <div class="mb-3">
+      <p>タグ</p>
+      <%= f.text_field :tag_name, class: "form-control", placeholder: "タグを入力してください" %>
+    </div>
+    <div class="mb-3">
       <p>評価</p>
       <div id="post_raty"
         data-star-on="<%= asset_path('star-on.png') %>"
