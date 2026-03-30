@@ -11,6 +11,7 @@
             <th style="width: 40%;">Title</th>
             <th style="width: 40%;">Opinion</th>
             <th>コメント</th>
+            <th>評価</th>
           </tr>
         </thead>
         <tbody>
@@ -26,6 +27,17 @@
               </td>
               <td><%= book.body %></td>
               <td><%= book.book_comments.count %></td>
+              <td>
+                <% if book.reviews.exists? %>
+                  <div id="show_raty_<%= book.id %>"
+                    data-score="<%= book.reviews.first&.score %>"
+                    data-star-on="<%= asset_path('star-on.png') %>"
+                    data-star-off="<%= asset_path('star-off.png') %>">
+                  </div>
+                <% else %>
+                  まだ評価がありません
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </tbody>
