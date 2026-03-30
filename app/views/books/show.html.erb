@@ -28,6 +28,18 @@
             <td>
               閲覧数: <%= @book.views_count %>
             </td>
+            <td>
+              評価: 
+              <% if @book.reviews.exists? %>
+                <div id="show_raty_<%= @book.id %>" 
+                  data-score="<%= @book.reviews.first&.score %>"
+                  data-star-on="<%= asset_path('star-on.png') %>"
+                  data-star-off="<%= asset_path('star-off.png') %>">
+                </div>
+              <% else %>
+                まだ評価がありません
+              <% end %>
+            </td>
           </td>
         </tr>
       </table>

@@ -64,7 +64,10 @@
     </div>
     <div class="mb-3">
       <p>評価</p>
-      <div id="post_raty"></div>
+      <div id="post_raty"
+        data-star-on="<%= asset_path('star-on.png') %>"
+        data-star-off="<%= asset_path('star-off.png') %>">
+      </div>
     </div>
 
     <%= f.submit "Create Book", class: "btn", style: "background-color: #28a745; color: white;" %>
