@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :books do
     resource :favorite, only: [:create, :destroy]
     resources :book_comments, only: [:create, :destroy]
+    resource :review, only: [:create]
   end
 
   get "/users/new", to: redirect("/users/sign_up")
