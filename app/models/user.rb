@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_secure_password
   has_many :sessions, dependent: :destroy
   has_many :books, dependent: :destroy # アソシエーション
+  has_many :reviews, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :book_comments, dependent: :destroy
   has_many :sent_messages, class_name: "Message", foreign_key: "sender_id", dependent: :destroy
