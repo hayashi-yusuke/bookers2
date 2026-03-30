@@ -4,11 +4,19 @@ class BooksController < ApplicationController
 
 
   def index
-    @books = Book.left_joins(:favorites)
-                 .group(:id)
-                 .order(Arel.sql("COUNT(CASE WHEN favorites.created_at >= '#{1.week.ago}' THEN 1 END) DESC"))
     @user = Current.session.user
     @new_book = Book.new
+
+     # paramsで並び順を切り替える
+    if params[:sort] == "rate"
+      # 評価の高い順
+      @books = Book.left_joins(:reviews)
+                  .group(:id)
+                  .order(Arel.sql("AVG(reviews.score) DESC"))
+    else
+      # 新着順（デフォルト）
+      @books = Book.order(created_at: :desc)
+    end
   end
 
   def show
