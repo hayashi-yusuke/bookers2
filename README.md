@@ -86,3 +86,4 @@ bundle exec rspec spec/models/user_spec.rb
 
 作者
 hayashi-yusuke
+[GitHub](https://github.com/hayashi-yusuke)
