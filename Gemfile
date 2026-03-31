@@ -69,3 +69,5 @@ end
 
 gem 'font-awesome-rails'
 gem 'net-smtp'
+
+gem "dartsass-rails", "~> 0.5.1"

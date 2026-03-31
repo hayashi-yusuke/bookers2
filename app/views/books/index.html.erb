@@ -3,13 +3,13 @@
     <%= render 'users/user_info' %>
 
     <div class="col-md-8 offset-md-1">
-      <h2 style="border-bottom: 1px solid #ccc;">Books</h2>
+      <h2 class="books-index__heading">Books</h2>
       <div class="mb-2">
         <%= link_to "新着順", books_path, class: "btn btn-sm btn-outline-primary" %>
         <%= link_to "評価順", books_path(sort: "rate"), class: "btn btn-sm btn-outline-warning" %>
       </div>
       <table class="table table-hover">
-        <thead style="border-bottom: 2px solid #ccc;">
+        <thead class="books-index__thead">
           <tr>
             <th style="width: 10%;"></th>
             <th style="width: 20%;">Title</th>
@@ -26,9 +26,9 @@
               <td>
                 <%= link_to user_path(book.user) do %>
                   <% if book.user.profile_image.attached? %>
-                    <%= image_tag book.user.profile_image, style: "width: 80px; height: 80px; object-fit: cover; border: 1px solid #ccc;" %>
+                    <%= image_tag book.user.profile_image, class: "books-index__avatar" %>
                   <% else %>
-                    <%= image_tag "no_image.jpg", style: "width: 80px; height: 80px; object-fit: cover; border: 1px solid #ccc;" %>
+                    <%= image_tag "no_image.jpg", class: "books-index__avatar" %>
                   <% end %>
                 <% end %>
               </td>
