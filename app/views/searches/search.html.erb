@@ -30,5 +30,16 @@
     <% else %>
       <p>投稿が見つかりませんでした</p>
     <% end %>
+    <% elsif params[:category] == "tag" %>
+    <% if @records.present? %>
+      <% @records.each do |book| %>
+        <div class="mb-3">
+          <p><%= link_to book.title, book_path(book) %></p>
+          <p><%= book.body %></p>
+        </div>
+      <% end %>
+    <% else %>
+      <p>該当する本が見つかりませんでした</p>
+    <% end %>
   <% end %>
 </div>
