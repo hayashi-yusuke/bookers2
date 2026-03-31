@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   # 認証をスキップ: サインアップ（new, create）はログイン前に行うため
-  allow_unauthenticated_access only: [:new, :create]
-  before_action :correct_user, only: [:edit, :update]
+  allow_unauthenticated_access only: [ :new, :create ]
+  before_action :correct_user, only: [ :edit, :update ]
 
 
   def new
@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all 
+    @users = User.all
     @user = Current.session.user
     @new_book = Book.new
   end
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
     # 今週 / 先週の比率（先週が0のときは0にする）
     @this_last_week_rate = @last_week_books_count == 0 ? "0%" : "#{(@this_week_books_count.to_f / @last_week_books_count * 100).round}%"
 
-    # 過去7日間の投稿数を日ごとに取得
+  # 過去7日間の投稿数を日ごとに取得
   @weekly_books = 7.times.map do |i|
     date = i.days.ago.to_date
     {
@@ -55,7 +55,6 @@ class UsersController < ApplicationController
       count: @user.books.where(created_at: date.all_day).count
     }
   end.reverse
-
   end
 
   def edit
@@ -80,7 +79,7 @@ class UsersController < ApplicationController
   end
 
   private
- 
+
   def user_params
     # name, email_address, password, password_confirmation を許可
     params.require(:user).permit(:name, :email_address, :password, :password_confirmation, :introduction, :profile_image)
@@ -92,5 +91,4 @@ class UsersController < ApplicationController
       redirect_to user_path(Current.session.user), alert: "Access error! You can't edit other users."
     end
   end
-  
 end

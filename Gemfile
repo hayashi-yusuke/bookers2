@@ -4,7 +4,7 @@ source "https://rubygems.org"
 gem "rails", "~> 8.1.2"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
-gem 'slim-rails'
+gem "slim-rails"
 
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", ">= 2.1"
@@ -59,17 +59,17 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-  gem 'letter_opener_web'
+  gem "letter_opener_web"
 end
 
 group :test do
-  gem 'capybara', '>= 2.15'
-    gem 'rspec-rails'
+  gem "capybara", ">= 2.15"
+    gem "rspec-rails"
     gem "factory_bot_rails"
-    gem 'faker'
+    gem "faker"
 end
 
-gem 'font-awesome-rails'
-gem 'net-smtp'
+gem "font-awesome-rails"
+gem "net-smtp"
 
 gem "dartsass-rails", "~> 0.5.1"

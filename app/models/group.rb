@@ -4,7 +4,7 @@ class Group < ApplicationRecord
 
   has_many :group_users, dependent: :destroy
   has_many :members, through: :group_users, source: :user
-  
+
   # バリデーション
   validates :name, presence: true, length: { maximum: 50 }
   validates :introduction, presence: true, length: { maximum: 200 }

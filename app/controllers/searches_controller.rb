@@ -1,5 +1,4 @@
 class SearchesController < ApplicationController
-
   def search
     @model = params[:model]
     @content = params[:content]
@@ -29,5 +28,4 @@ class SearchesController < ApplicationController
       model.where("#{column} LIKE ?", "%#{@content}%")
     end
   end
-
 end

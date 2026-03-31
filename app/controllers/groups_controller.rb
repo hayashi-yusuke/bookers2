@@ -1,7 +1,6 @@
 class GroupsController < ApplicationController
-
-  before_action :set_group, only: [:show, :edit, :update]
-  before_action :check_owner, only: [:edit, :update]
+  before_action :set_group, only: [ :show, :edit, :update ]
+  before_action :check_owner, only: [ :edit, :update ]
 
   def index
     # グループ一覧を取得

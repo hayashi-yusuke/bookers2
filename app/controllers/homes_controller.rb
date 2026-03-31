@@ -1,7 +1,7 @@
 class HomesController < ApplicationController
-  allow_unauthenticated_access only: [:top, :about]
+  allow_unauthenticated_access only: [ :top, :about ]
 
-  before_action :resume_session, only: [:top]  # ← 追加！
+  before_action :resume_session, only: [ :top ]  # ← 追加！
 
   def top
   end

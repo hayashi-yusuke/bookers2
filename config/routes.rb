@@ -8,27 +8,27 @@ Rails.application.routes.draw do
 
   get "home/about", to: "homes#about", as: "homes_about"
 
-  resources :groups, only: [:index, :show, :new, :create, :edit, :update] do
-    resource :group_user, only: [:create, :destroy]
-    resource :notice, only: [:new, :create], controller: 'notices'
+  resources :groups, only: [ :index, :show, :new, :create, :edit, :update ] do
+    resource :group_user, only: [ :create, :destroy ]
+    resource :notice, only: [ :new, :create ], controller: "notices"
   end
 
   resources :books do
-    resource :favorite, only: [:create, :destroy]
-    resources :book_comments, only: [:create, :destroy]
-    resource :review, only: [:create]
+    resource :favorite, only: [ :create, :destroy ]
+    resources :book_comments, only: [ :create, :destroy ]
+    resource :review, only: [ :create ]
   end
 
   get "/users/new", to: redirect("/users/sign_up")
-  get '/users/sign_up', to: 'users#new', as: 'sign_up'
-  resources :users, only: [:new, :create, :index, :show, :edit, :update] do
-    resource :relationship, only: [:create, :destroy]
+  get "/users/sign_up", to: "users#new", as: "sign_up"
+  resources :users, only: [ :new, :create, :index, :show, :edit, :update ] do
+    resource :relationship, only: [ :create, :destroy ]
       get "followings" => "relationships#followings", as: "followings"
       get "followers" => "relationships#followers", as: "followers"
-      resources :messages, only: [:index, :create]
+      resources :messages, only: [ :index, :create ]
       get "books_on_date", on: :member
   end
-  resource :session, only: [:new, :create, :destroy]
+  resource :session, only: [ :new, :create, :destroy ]
   resources :passwords, param: :token
   get "search" => "searches#search", as: "search"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

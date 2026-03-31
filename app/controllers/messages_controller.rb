@@ -4,16 +4,16 @@ class MessagesController < ApplicationController
 
 
   def index
-    #自分と相手のメッセージ両方向で取得（時系列順）
+    # 自分と相手のメッセージ両方向で取得（時系列順）
     @messages = Message.where(
       "(sender_id = :me AND receiver_id = :other) OR (sender_id = :other AND receiver_id = :me)",
       me: Current.user.id, other: @other_user.id
     ).order(:created_at)
 
-    #新規メッセージ用の空オブジェクト
+    # 新規メッセージ用の空オブジェクト
     @message = Message.new
 
-    #サイドバー用：過去にDMしたユーザー一覧
+    # サイドバー用：過去にDMしたユーザー一覧
     partner_ids = Message.where("sender_id = :me", me: Current.user.id).pluck(:receiver_id) +
                   Message.where("receiver_id = :me", me: Current.user.id).pluck(:sender_id)
     @partners = User.where(id: partner_ids.uniq)
@@ -47,12 +47,12 @@ class MessagesController < ApplicationController
     @other_user = User.find(params[:user_id])
   end
 
-    # フォームから受け取っていい項目を content だけに制限する
+  # フォームから受け取っていい項目を content だけに制限する
   def message_params
     params.require(:message).permit(:content)
   end
 
-    # 相互フォローか確認するメソッド
+  # 相互フォローか確認するメソッド
   def check_mutual_follow
     # 自分が相手をフォローしているか？
     following = Current.user.following?(@other_user)

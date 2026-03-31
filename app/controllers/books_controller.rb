@@ -1,13 +1,13 @@
 class BooksController < ApplicationController
   before_action :require_authentication # アクションの前にログイン確認
-  before_action :correct_book_user, only: [:edit, :update, :destroy]
+  before_action :correct_book_user, only: [ :edit, :update, :destroy ]
 
 
   def index
     @user = Current.session.user
     @new_book = Book.new
 
-     # paramsで並び順を切り替える
+    # paramsで並び順を切り替える
     if params[:sort] == "rate"
       # 評価の高い順
       @books = Book.left_joins(:reviews)
@@ -47,7 +47,7 @@ class BooksController < ApplicationController
     else
       @user = Current.session.user
       @books = Book.all
-      render 'users/show', status: :unprocessable_entity
+      render "users/show", status: :unprocessable_entity
     end
   end
 
@@ -82,5 +82,4 @@ class BooksController < ApplicationController
       redirect_to books_path, alert: "Access error! You can't edit other users' books."
     end
   end
-  
 end

@@ -20,5 +20,4 @@ class SessionsController < ApplicationController
     terminate_session
     redirect_to after_logout_url, notice: "Logout successfully!"
   end
-
 end

@@ -1,5 +1,4 @@
 class GroupMailer < ApplicationMailer
-
   def notice(group, member, title, body)
     # メールの中で使う変数
     @group  = group
@@ -13,5 +12,4 @@ class GroupMailer < ApplicationMailer
       subject: title
     )
   end
-
 end
